@@ -1,0 +1,33 @@
+.brand {
+  font-weight: 500;
+  font-size: 1rem;
+  color: #fff;
+  margin-right: 16px;
+}
+
+:host ::ng-deep .p-menubar {
+  background: #1e293b;
+  border: none;
+  border-radius: 0;
+  height: 60px;
+  padding: 0 20px;
+
+  .p-menuitem-link {
+    color: #94a3b8 !important;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.08) !important;
+      color: #fff !important;
+
+      .p-menuitem-icon,
+      .p-menuitem-text {
+        color: #3f3a3a !important;
+      }
+    }
+
+    .p-menuitem-icon,
+    .p-menuitem-text {
+      color: #94a3b8 !important;
+    }
+  }
+}

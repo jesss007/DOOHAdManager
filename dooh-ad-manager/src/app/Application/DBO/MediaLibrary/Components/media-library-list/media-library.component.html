@@ -1,0 +1,172 @@
+<p-toast></p-toast>
+
+<div class="page">
+  <div class="header">
+    <h1>Media Library</h1>
+    <div class="button">
+      <button
+        pButton
+        icon="pi pi-upload"
+        label="Upload Media"
+        class="p-button-sm"
+        (click)="mediaUpload.show()"
+      ></button>
+    </div>
+  </div>
+
+  <div class="filter-bar">
+    <input
+      pInputText
+      type="text"
+      placeholder="Search..."
+      [(ngModel)]="filter.search"
+    />
+
+    <p-dropdown
+      [options]="typeOptions"
+      [(ngModel)]="filter.isVideo"
+      placeholder="All Types"
+      optionLabel="label"
+      optionValue="value"
+      [showClear]="true"
+    />
+
+    <p-dropdown
+      [options]="deletedOptions"
+      [(ngModel)]="filter.isDeleted"
+      placeholder="Active only"
+      optionLabel="label"
+      optionValue="value"
+    />
+
+    <button pButton icon="pi pi-search" (click)="onFilter()"></button>
+    <button
+      pButton
+      icon="pi pi-times"
+      class="p-button-secondary"
+      (click)="onClearFilter()"
+    ></button>
+  </div>
+
+  <p-table [value]="mediaList">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Preview</th>
+        <th pSortableColumn="name">Name <p-sortIcon field="name" /></th>
+        <th pSortableColumn="extension">
+          Extension <p-sortIcon field="extension" />
+        </th>
+        <th pSortableColumn="isVideo">Type <p-sortIcon field="isVideo" /></th>
+        <th pSortableColumn="duration">
+          Duration <p-sortIcon field="duration" />
+        </th>
+        <th pSortableColumn="resolution">
+          Resolution
+          <p-sortIcon field="resolution" />
+        </th>
+        <th pSortableColumn="createdAt">
+          Uploaded At <p-sortIcon field="createdAt" />
+        </th>
+        <th *ngIf="!filter.isDeleted">Actions</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-media>
+      <tr>
+        <td>
+          <div class="media-thumb" (click)="onPreview(media)">
+            <img
+              *ngIf="!media.isVideo"
+              [src]="getMediaUrl(media.url)"
+              [alt]="media.name"
+              class="thumb-img"
+            />
+            <div *ngIf="media.isVideo" class="thumb-video">
+              <i class="pi pi-video"></i>
+            </div>
+          </div>
+        </td>
+        <td>{{ media.name }}</td>
+        <td>
+          <p-tag [value]="media.extension.toUpperCase()" severity="info" />
+        </td>
+        <td>
+          <p-tag
+            [value]="getMediaType(media)"
+            [severity]="media.isVideo ? 'warning' : 'success'"
+          />
+        </td>
+        <td>{{ media.duration ? media.duration + "s" : "-" }}</td>
+        <td>{{ media.resolution }}</td>
+        <td>{{ media.createdAt | date: "MMM d, y" }}</td>
+        <td *ngIf="!filter.isDeleted">
+          <div class="action-button">
+            <button
+              *ngIf="!media.isDeleted"
+              pButton
+              icon="pi pi-trash"
+              class="p-button-text p-button-sm p-button-danger"
+              pTooltip="Delete"
+              tooltipPosition="top"
+              (click)="onDelete(media)"
+            ></button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="6">No media found</td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <div class="pagination-wrapper">
+    <div class="info">
+      Showing {{ offset + 1 }} to {{ offset + mediaList.length }} of
+      {{ totalRows }} items
+    </div>
+    <div class="pagination">
+      <p-button
+        icon="pi pi-angle-double-left"
+        (onClick)="onPageChange(currentPage - 1)"
+        [attr.disabled]="currentPage === 1 ? true : null"
+      />
+      <span>Page {{ currentPage }} of {{ totalPages }}</span>
+      <p-button
+        icon="pi pi-angle-double-right"
+        (onClick)="onPageChange(currentPage + 1)"
+        [attr.disabled]="currentPage === totalPages ? true : null"
+      />
+    </div>
+  </div>
+</div>
+
+<p-confirmDialog />
+
+<p-dialog
+  [(visible)]="previewVisible"
+  [modal]="true"
+  [dismissableMask]="true"
+  [closable]="true"
+  [header]="selectedMedia?.name ?? 'Preview'"
+  [style]="{ width: '60vw', maxWidth: '900px' }"
+>
+  <div *ngIf="selectedMedia" class="preview-container">
+    <img
+      *ngIf="!selectedMedia.isVideo"
+      [src]="getMediaUrl(selectedMedia.url)"
+      [alt]="selectedMedia.name"
+      class="preview-image"
+    />
+    <video
+      *ngIf="selectedMedia.isVideo"
+      [src]="getMediaUrl(selectedMedia.url)"
+      controls
+      class="preview-video"
+    ></video>
+  </div>
+</p-dialog>
+
+<media-library-upload #mediaUpload (onSave)="onSave()"></media-library-upload>

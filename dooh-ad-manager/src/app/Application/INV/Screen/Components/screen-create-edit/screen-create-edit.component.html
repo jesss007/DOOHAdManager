@@ -1,0 +1,73 @@
+<p-overlay [visible]="isActive" (onHide)="onCancel()">
+  <div class="modal" >
+
+    <div class="modal-header">
+      <h2>{{ screenData ? 'Update Screen' : 'Add Screen' }}</h2>
+    </div>
+
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Name</label>
+        <input [(ngModel)]="screen.name" placeholder="Enter screen name" />
+      </div>
+
+      <div class="form-group">
+        <label>Address</label>
+        <input [(ngModel)]="screen.address" placeholder="Enter address" />
+      </div>
+
+      <div class="form-group">
+        <label>Location</label>
+        <input [(ngModel)]="screen.location" placeholder="e.g. 27.7172, 85.3240" />
+        <span class="hint">
+          <i class="pi pi-info-circle"></i>
+          Open Google Maps → Right Click on location → Copy the coordinates shown at the top.
+        </span>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Resolution</label>
+          <input [(ngModel)]="screen.resolution" placeholder="1920x1080" />
+          <span class="hint">
+            <i class="pi pi-info-circle"></i>
+            Default resolution is 1920x1080.
+          </span>
+        </div>
+
+        <div class="form-group">
+          <label>Orientation</label>
+          <select [(ngModel)]="screen.orientation">
+            <option [ngValue]="1">Landscape</option>
+            <option [ngValue]="2">Portrait</option>
+            <option [ngValue]="3">Square</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group" *ngIf="screenData">
+        <label>Status</label>
+        <select [(ngModel)]="screen.status">
+          <option [ngValue]="0">Inactive</option>
+          <option [ngValue]="1">Active</option>
+          <option [ngValue]="2">Under Maintenance</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Tags</label>
+        <input [(ngModel)]="tagInput" placeholder="e.g. indoor, mall, gate 1" />
+        <span class="hint">
+          <i class="pi pi-info-circle"></i>
+          Separate multiple tags with commas.
+        </span>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button pButton label="Cancel" icon="pi pi-times" class="p-button-sm p-button-secondary" (click)="onCancel()"></button>
+      <button pButton label="Submit" icon="pi pi-check" class="p-button-sm" (click)="onSubmit()"></button>
+    </div>
+
+  </div>
+</p-overlay>
