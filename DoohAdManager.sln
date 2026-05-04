@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.37012.4
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoohAdManager.API", "DoohAdManager.API\DoohAdManager.API.csproj", "{0CB1CB99-217A-4464-A7D6-9F044506B3B4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoohAdManager.DataAccess", "DoohAdManager.DataAccess\DoohAdManager.DataAccess.csproj", "{07FFE32D-73F5-445C-BFB2-C8D7F57E355C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoohAdManager.Interface", "DoohAdManager.Interface\DoohAdManager.Interface.csproj", "{FC8CB958-2BB9-413F-B9C4-9FB58477777E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoohAdManager.Model", "DoohAdManager.Model\DoohAdManager.Model.csproj", "{56030659-A33D-4908-8329-824B5838665B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoohAdManager.Service", "DoohAdManager.Service\DoohAdManager.Service.csproj", "{EE1D0842-326F-4C72-9D33-A6159C49A2A4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0CB1CB99-217A-4464-A7D6-9F044506B3B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CB1CB99-217A-4464-A7D6-9F044506B3B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CB1CB99-217A-4464-A7D6-9F044506B3B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CB1CB99-217A-4464-A7D6-9F044506B3B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07FFE32D-73F5-445C-BFB2-C8D7F57E355C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07FFE32D-73F5-445C-BFB2-C8D7F57E355C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07FFE32D-73F5-445C-BFB2-C8D7F57E355C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07FFE32D-73F5-445C-BFB2-C8D7F57E355C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC8CB958-2BB9-413F-B9C4-9FB58477777E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC8CB958-2BB9-413F-B9C4-9FB58477777E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC8CB958-2BB9-413F-B9C4-9FB58477777E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC8CB958-2BB9-413F-B9C4-9FB58477777E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56030659-A33D-4908-8329-824B5838665B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56030659-A33D-4908-8329-824B5838665B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56030659-A33D-4908-8329-824B5838665B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56030659-A33D-4908-8329-824B5838665B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE1D0842-326F-4C72-9D33-A6159C49A2A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE1D0842-326F-4C72-9D33-A6159C49A2A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE1D0842-326F-4C72-9D33-A6159C49A2A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE1D0842-326F-4C72-9D33-A6159C49A2A4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DBEA5C2E-6F46-42F8-9F69-D4B6467AA28E}
+	EndGlobalSection
+EndGlobal
