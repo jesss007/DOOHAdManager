@@ -32,4 +32,13 @@ namespace DoohAdManager.Model.Shared
         Saturday = 7
 
     }
+
+    public enum CampaignStatus
+    {
+        New = 0, 
+        Active = 1, 
+        Paused = 2, 
+        Completed = 3, 
+        Cancelled = 4
+    }
 }
