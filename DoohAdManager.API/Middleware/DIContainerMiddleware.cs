@@ -19,6 +19,7 @@ namespace DoohAdManager.API.Middleware
             services.AddScoped<IMediaLibraryService, MediaLibraryService>();
             services.AddScoped<IMediaService>(provider => new MediaService(env.WebRootPath));
             services.AddScoped<ICampaignService, CampaignService>();
+            services.AddScoped<ICampaignMediaService, CampaignMediaService>();
 
 
             return services;

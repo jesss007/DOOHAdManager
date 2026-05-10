@@ -55,65 +55,6 @@ namespace DoohAdManager.API.Controllers.Application.DBO
             {
                 return BadRequest(ApiResponse.Fail(ex.Message));
             }
-        }
-
-        [HttpPost("AddCampaignMedia")]
-
-        public async Task<IActionResult> InsertCampaignMedia([FromBody] CampaignMediaInsert campaignMediaInsert)
-        {
-            try
-            {
-                var response = await cs.InsertCampaignMedia(campaignMediaInsert);
-                return Ok(ApiResponse.Success(response));
-            }
-            catch(Exception ex)
-            {
-                return BadRequest(ApiResponse.Fail(ex.Message));
-            }
-        }
-
-        [HttpGet("GetCampaignMedia")]
-        public async Task<IActionResult> GetCampaignMedia([FromQuery] MvParamReqOption<CampaignMediaFilter> param)
-        {
-            try
-            {
-                var response = await cs.GetCampaignMedia(param);
-                return Ok(ApiResponse.Success(response));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ApiResponse.Fail(ex.Message));
-            }
-        }
-
-        [HttpPut("UpdateCampaignMedia")]
-
-        public async Task<IActionResult> UpdateCampaignMedia([FromBody] CampaignMediaUpdate campaignMediaUpdate)
-        {
-            try
-            {
-                var response = await cs.UpdateCampaignMedia(campaignMediaUpdate);
-                return Ok(ApiResponse.Success(response));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ApiResponse.Fail(ex.Message));
-            }
-        }
-
-        [HttpDelete("DeleteCampaignMedia")]
-
-        public async Task<IActionResult> DeleteCampaignMedia([FromQuery] CampaignMediaDelete campaignMediaDelete)
-        {
-            try
-            {
-                var response = await cs.DeleteCampaignMedia(campaignMediaDelete);
-                return Ok(ApiResponse.Success(response));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ApiResponse.Fail(ex.Message));
-            }
-        }
+        }        
     }
 }
