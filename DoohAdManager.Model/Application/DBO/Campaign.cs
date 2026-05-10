@@ -119,5 +119,32 @@ namespace DoohAdManager.Model.Application.DBO
         public int PlaySequence { get; set; }
     }
 
+    public class CampaignMediaUpdate
+    {
+        public int CampaignId { get; set; }
+        public int ScreenId { get; set; }
+        public DateOnly PlayDate { get; set; }
+        public int UpdatedBy { get; set; }
+        public required List<MediaItemUpdate> Media { get; set; }
+
+    }
+
+    public class MediaItemUpdate
+    {
+        public int Id { get; set; }
+        public int PlaySequence { get; set; }
+    }
+    public class CampaignMediaFilter
+    {
+        public int CampaignId { get; set; }
+        public int? ScreenId { get; set; }
+        public DateOnly? PlayDate { get; set; }
+    }
+    public class CampaignMediaDelete
+    {
+        public int Id { get; set; }
+        public int DeletedBy { get; set; }
+    }
+
 
 }
