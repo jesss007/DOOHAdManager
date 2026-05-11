@@ -1,4 +1,5 @@
 import { ScreenStatus, ScreenOrientation } from "../../../../Shared/Models/enum.model";
+import { ScreenOperatingHour } from "./screen-operating-hour";
 
 export class Screen {
     id : number;
@@ -17,6 +18,9 @@ export class Screen {
     isDeleted? : boolean;
     deletedAt? : Date;
     deletedBy? : number;
+    selected?: boolean;
+    operatingHours?: ScreenOperatingHour[] | null; 
+    
 
     constructor() {
     this.id = 0;
@@ -60,8 +64,14 @@ export interface ScreenDelete {
 }
 
 export interface ScreenFilter {
-    tenantId : number
+    tenantId : number;
+    id? : number;
     search?: string;
     status?: ScreenStatus;
     orientation?: ScreenOrientation;
+}
+
+export interface ScreenDropdown{
+    id: number;
+    name: string;
 }

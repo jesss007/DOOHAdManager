@@ -1,0 +1,128 @@
+<p-toast></p-toast>
+
+<div class="page">
+  <div class="header">
+    <h1>Campaigns</h1>
+    <div class="button">
+      <button
+        pButton
+        icon="pi pi-plus"
+        label="Add Campaign"
+        class="p-button-sm"
+        (click)="campaigncreate.show()"
+      ></button>
+    </div>
+  </div>
+
+  <div class="filter-bar">
+    <input
+      pInputText
+      type="text"
+      placeholder="Search.."
+      [(ngModel)]="filter.search"
+    />
+
+    <p-dropdown
+      [options]="statusOptions"
+      [(ngModel)]="filter.status"
+      placeholder="All Status"
+      optionLabel="label"
+      optionValue="value"
+      [showClear]="true"
+    />
+
+    <button pButton icon="pi pi-search" (click)="onFilter()"></button>
+    <button
+      pButton
+      icon="pi pi-times"
+      class="p-button-secondary"
+      (click)="onClearFilter()"
+    ></button>
+  </div>
+
+  <p-table [value]="campaign">
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="name">
+          Name <p-sortIcon field="name"></p-sortIcon>
+        </th>
+        <th pSortableColumn="durationInDays">
+          Duration <p-sortIcon field="durationInDays"></p-sortIcon>
+        </th>
+        <th pSortableColumn="status">
+          Status <p-sortIcon field="status"></p-sortIcon>
+        </th>
+        <th pSortableColumn="remarks">
+          Remarks <p-sortIcon field="remarks"></p-sortIcon>
+        </th>
+        <th>Actions</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-campaign>
+      <tr>
+        <td>{{ campaign.name }}</td>
+        <td>{{ campaign.durationInDays }} days</td>
+        <td>
+          <p-tag
+            [value]="CampaignStatus[campaign.status]"
+            [severity]="
+              campaign.status === 1
+                ? 'success'
+                : campaign.status === 2
+                  ? 'warning'
+                  : campaign.status === 3
+                    ? 'info'
+                    : campaign.status === 4
+                      ? 'danger'
+                      : 'secondary'
+            "
+          />
+        </td>
+        <td>{{ campaign.remarks ?? "-" }}</td>
+        <td>
+          <div class="action-buttons">
+            <button
+              pButton
+              icon="pi pi-trash"
+              class="p-button-text p-button-sm p-button-danger"
+              pTooltip="Delete"
+              tooltipPosition="top"
+              (click)="onDelete(campaign)"
+            ></button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="5">No campaigns found</td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <div class="pagination-wrapper">
+    <div class="info">
+      Showing {{ offset + 1 }} to {{ offset + campaign.length }} of
+      {{ totalRows }} campaign
+    </div>
+    <div class="pagination">
+      <p-button
+        icon="pi pi-angle-double-left"
+        (onClick)="onPageChange(currentPage - 1)"
+        [attr.disabled]="currentPage === 1 ? true : null"
+      />
+      <span>Page {{ currentPage }} of {{ totalPages }}</span>
+      <p-button
+        icon="pi pi-angle-double-right"
+        (onClick)="onPageChange(currentPage + 1)"
+        [attr.disabled]="currentPage === totalPages ? true : null"
+      />
+    </div>
+  </div>
+</div>
+
+<p-confirmDialog />
+
+<campaign-create  #campaigncreate (onSubmit)="onSave($event)"></campaign-create>

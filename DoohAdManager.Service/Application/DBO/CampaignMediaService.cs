@@ -51,13 +51,13 @@ namespace DoohAdManager.Service.Application.DBO
                 throw;
             }
         }
-        public async Task<CampaignMedia?> DeleteCampaignMedia(CampaignMediaDelete campaignMediaDelete)
+        public async Task<CampaignMediaDeleted?> DeleteCampaignMedia(CampaignMediaDelete campaignMediaDelete)
         {
             try
             {
                 string json = JsonConvert.SerializeObject(campaignMediaDelete);
                 string result = await ds.ActionProcedure("dbo.SpCampaignMediaDel", json);
-                return JsonConvert.DeserializeObject<CampaignMedia?>(result);
+                return JsonConvert.DeserializeObject<CampaignMediaDeleted?>(result);
             }
             catch (Exception)
             {

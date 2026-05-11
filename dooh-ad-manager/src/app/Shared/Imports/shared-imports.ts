@@ -12,6 +12,9 @@ import { DialogModule } from "primeng/dialog";
 import { CalendarModule } from "primeng/calendar";
 import { MenubarModule } from "primeng/menubar";
 import { FileUploadModule } from "primeng/fileupload";
+import { StepperModule } from "primeng/stepper";
+import { CheckboxModule } from "primeng/checkbox";
+import { OverlayModule } from "primeng/overlay";
 
 export const sharedImports = [
     CommonModule,
@@ -27,5 +30,9 @@ export const sharedImports = [
     DialogModule,
     CalendarModule,
     MenubarModule,
-    FileUploadModule
+    FileUploadModule,
+    CalendarModule,
+    StepperModule,
+    CheckboxModule,
+    OverlayModule
 ]

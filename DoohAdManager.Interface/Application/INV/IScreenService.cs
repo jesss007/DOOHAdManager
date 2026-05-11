@@ -12,7 +12,6 @@ namespace DoohAdManager.Interface.Application.INV
     {
         Task<MvGridConfig<Screen>?> GetScreen(MvParamReqOption<ScreenFilter> param);
         Task<Screen?> InsertScreen(ScreenInsert screenInsert);
-
         Task<Screen?> UpdateScreen(ScreenUpdate screenUpdate);
         Task<Screen?> DeleteScreen(ScreenDelete screenDelete);
         Task<List<ScreenDropdown>?> GetScreenDdl();

@@ -30,12 +30,12 @@ export class NavBarComponent implements OnInit {
       {
         label: 'Campaigns',
         icon: 'pi pi-megaphone',
-        command: () => this.router.navigate(['/campaigns']),
+        command: () => this.router.navigate(['/campaign']),
       },
       {
         label: 'Playlists',
         icon: 'pi pi-list',
-        command: () => this.router.navigate(['/playlists']),
+        command: () => this.router.navigate(['/playlist']),
       },
     ];
   }

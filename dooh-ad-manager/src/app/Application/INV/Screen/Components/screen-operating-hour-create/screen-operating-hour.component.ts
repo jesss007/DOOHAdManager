@@ -53,6 +53,7 @@ export class ScreenOperatingHourComponent
     this.newSlot.screenId = screenId;
     this.loadOperatingHours(screenId);
   }
+  
   loadOperatingHours(screenId: number) {
     this.screenOperatingHourService
       .getOperatingHour(screenId)
@@ -70,7 +71,7 @@ export class ScreenOperatingHourComponent
 
   addSlot() {
 
-     this.newSlot.startTime = this.newSlot.startTime.length === 5 ? this.newSlot.startTime + ':00' : this.newSlot.startTime;
+    this.newSlot.startTime = this.newSlot.startTime.length === 5 ? this.newSlot.startTime + ':00' : this.newSlot.startTime;
     this.newSlot.endTime = this.newSlot.endTime.length === 5 ? this.newSlot.endTime + ':00' : this.newSlot.endTime;
     this.screenOperatingHourService
       .insertOperatingHour(this.newSlot)
@@ -91,6 +92,7 @@ export class ScreenOperatingHourComponent
         error: (err) => this.showMessage('Error', err.error?.message, 'error'),
       });
   }
+
   deleteSlot(slot: ScreenOperatingHour) {
     this.screenOperatingHourService
       .deleteOperatingHour({ id: slot.id, deletedBy: 1 })

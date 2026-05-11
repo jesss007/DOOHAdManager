@@ -20,3 +20,11 @@ export enum DayOfWeek {
   Friday = 6,
   Saturday = 7,
 }
+
+export enum CampaignStatus{
+  new = 0,
+  active = 1, 
+  paused = 2, 
+  completed = 3, 
+  cancelled = 4
+}

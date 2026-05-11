@@ -14,6 +14,7 @@ import {
 } from '../../../../../Shared/Models/response-model';
 import { ScreenCreateEditComponent } from '../screen-create-edit/screen-create-edit.component';
 import { ScreenOperatingHourComponent } from '../screen-operating-hour-create/screen-operating-hour.component';
+import { ScreenInfoComponent } from '../screen-info/screen-info.component';
 
 @Component({
   selector: 'screen',
@@ -22,6 +23,7 @@ import { ScreenOperatingHourComponent } from '../screen-operating-hour-create/sc
     sharedImports,
     ScreenCreateEditComponent,
     ScreenOperatingHourComponent,
+    ScreenInfoComponent,
   ],
   templateUrl: './screen.component.html',
   styleUrl: './screen.component.scss',
@@ -95,12 +97,13 @@ export class ScreenComponent extends AppComponent implements OnInit, OnDestroy {
 
   onClearFilter() {
     this.filter = {
-      tenantId: 0,
+      tenantId: 1,
       search: undefined,
       status: undefined,
       orientation: undefined,
     };
-    ((this.currentPage = 1), this.loadScreens());
+    this.currentPage = 1, 
+    this.loadScreens();
   }
 
   onPageChange(page: number) {

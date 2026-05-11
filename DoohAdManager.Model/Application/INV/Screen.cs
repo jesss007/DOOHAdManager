@@ -25,6 +25,7 @@ namespace DoohAdManager.Model.Application.INV
         public bool IsDeleted { get; set; }
         public DateTime? DeletedAt { get; set; }
         public int? DeletedBy { get; set; }
+        public List<ScreenOperatingHour>? OperatingHours { get; set; }
 
     }
 
@@ -64,6 +65,7 @@ namespace DoohAdManager.Model.Application.INV
     {
         public int TenantId { get; set; }
         public string? Search { get; set; }
+        public int? Id { get; set; }
         public ScreenStatus? Status { get; set; }
         public ScreenOrientation? Orientation { get; set; }
     }
@@ -73,6 +75,5 @@ namespace DoohAdManager.Model.Application.INV
         public int Id { get; set; }
         public string Name { get; set; }
     }
-
 
 }
