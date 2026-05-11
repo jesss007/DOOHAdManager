@@ -43,7 +43,9 @@ export class ScreenService {
 
   getScreenById(id: number): Observable<ApiResponse<MvGridConfig<Screen>>> {
     return this.http.get<ApiResponse<MvGridConfig<Screen>>>(
-      `${this.baseUrl}?Filter.TenantId=1&Filter.Id=${id}&Offset=0&PageSize=1`,
+      `${this.baseUrl}?Offset=0&PageSize=1` +
+      `&Filter.TenantId=1`+
+      `&Filter.Id=${id}`
     );
   }
 

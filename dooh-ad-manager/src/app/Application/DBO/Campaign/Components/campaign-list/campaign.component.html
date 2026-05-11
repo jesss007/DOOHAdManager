@@ -84,6 +84,14 @@
           <div class="action-buttons">
             <button
               pButton
+              icon="pi pi-eye"
+              class="p-button-text p-button-sm p-button-info"
+              pTooltip="View"
+              tooltipPosition="top"
+              (click)="campaignInfo.show(campaign.id)"
+            ></button>
+            <button
+              pButton
               icon="pi pi-trash"
               class="p-button-text p-button-sm p-button-danger"
               pTooltip="Delete"
@@ -125,4 +133,5 @@
 
 <p-confirmDialog />
 
-<campaign-create  #campaigncreate (onSubmit)="onSave($event)"></campaign-create>
+<campaign-create #campaigncreate (onSubmit)="onSave($event)"></campaign-create>
+<campaign-info #campaignInfo></campaign-info>

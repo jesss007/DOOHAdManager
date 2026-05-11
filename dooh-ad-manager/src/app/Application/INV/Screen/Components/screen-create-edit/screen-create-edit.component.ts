@@ -59,7 +59,7 @@ export class ScreenCreateEditComponent
       address: this.screenData?.address || '',
       location: this.screenData?.location || '',
       resolution: this.screenData?.resolution || '1920x1080',
-      status: this.screenData?.status || ScreenStatus.Active,
+      status: this.screenData?.status ?? ScreenStatus.Active,
       orientation: this.screenData?.orientation || ScreenOrientation.Landscape,
       tag: this.screenData?.tag || [],
     };

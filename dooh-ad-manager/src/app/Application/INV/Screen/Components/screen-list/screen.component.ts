@@ -121,8 +121,6 @@ export class ScreenComponent extends AppComponent implements OnInit, OnDestroy {
     } 
     else {
       this.loadScreens();
-      // this.screens = [submitScreen, ...this.screens]
-      // this.totalRows++;
     }
   }
 
@@ -152,7 +150,7 @@ export class ScreenComponent extends AppComponent implements OnInit, OnDestroy {
           });
       },
       reject: () => {
-        this.showMessage('Cancel', 'Product deletion cancelled', 'info');
+        this.showMessage('Cancel', 'Screen deletion cancelled', 'info');
       },
     });
   }

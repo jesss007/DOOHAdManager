@@ -45,8 +45,9 @@ export class CampaignService {
 
   getCampaignById (id : number) : Observable<ApiResponse<MvGridConfig<Campaign>>> {
     return this.http.get<ApiResponse<MvGridConfig<Campaign>>> (
-      `${this.baseUrl}?Filter.TenantId=1&Filter.CampaignId=${id}
-      &Offset=0&PageSize=1`,
-  );
+      `${this.baseUrl}?Offset=0&PageSize=1` +
+      `&Filter.TenantId=1` + 
+      `&Filter.CampaignId=${id}`
+    )
   }
 }

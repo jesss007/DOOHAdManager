@@ -10,11 +10,12 @@ import {
   MvGridConfig,
 } from '../../../../../Shared/Models/response-model';
 import { CampaignCreateComponent } from '../campaign-create/campaign-create.component';
+import { CampaignInfoComponent } from '../campaign-info/campaign-info.component';
 
 @Component({
   selector: 'campaign',
   standalone: true,
-  imports: [sharedImports, CampaignCreateComponent],
+  imports: [sharedImports, CampaignCreateComponent, CampaignInfoComponent],
   templateUrl: './campaign.component.html',
   styleUrl: './campaign.component.scss',
 })

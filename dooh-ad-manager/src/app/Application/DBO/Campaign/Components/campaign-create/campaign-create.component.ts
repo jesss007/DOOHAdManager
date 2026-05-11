@@ -9,8 +9,7 @@ import {
 import { AppComponent } from '../../../../../app.component';
 import {
   Campaign,
-  CampaignDateInsert,
-  CampaignScreenInsert,
+  CampaignInsert
 } from '../../Models/campaign';
 import { Subject, takeUntil } from 'rxjs';
 import { CampaignService } from '../../Services/campaign.service';
@@ -18,7 +17,6 @@ import { ScreenDropdown } from '../../../../INV/Screen/Models/screen';
 import { ScreenService } from '../../../../INV/Screen/Services/screen.service';
 import {
   ApiResponse,
-  MvGridConfig,
 } from '../../../../../Shared/Models/response-model';
 import { sharedImports } from '../../../../../Shared/Imports/shared-imports';
 import { ScreenInfoComponent } from '../../../../INV/Screen/Components/screen-info/screen-info.component';
@@ -39,10 +37,7 @@ export class CampaignCreateComponent
   private destroy = new Subject<void>();
   isActive = false;
   activeStep = 0;
-
-  campaignName = '';
-  campaignRemarks = '';
-  campaignDate: CampaignDateInsert[] = [{ startDate: '', endDate: '' }];
+  campaign: CampaignInsert = new CampaignInsert();
 
   screen: ScreenDropdown[] = [];
   selectedScreen: ScreenDropdown[] = [];
@@ -57,15 +52,16 @@ export class CampaignCreateComponent
 
   ngOnInit() {}
 
-  show() {
+  show(){
+    this.reset();
+  }
+
+  reset() {
     this.isActive = false;
     this.loadScreen();
     setTimeout(() => {
     this.activeStep = 0;
-    this.campaignName = '';
-    this.campaignRemarks = '';
-    this.campaignDate = [{ startDate: '', endDate: '' }];
-    this.screen = [];
+    this.campaign = new CampaignInsert();
     this.selectedScreen = [];
     this.isActive = true;
     },0);
@@ -100,15 +96,15 @@ export class CampaignCreateComponent
   }
 
   addDate() {
-    this.campaignDate.push({ startDate: '', endDate: '' });
+    this.campaign.date.push({ startDate: '', endDate: '' });
   }
 
   removeDate(index: number) {
-    if (this.campaignDate.length === 1) {
-      this.campaignDate[0] = { startDate: '', endDate: '' };
+    if (this.campaign.date.length === 1) {
+      this.campaign.date[0] = { startDate: '', endDate: '' };
       return;
     }
-    this.campaignDate.splice(index, 1);
+    this.campaign.date.splice(index, 1);
   }
 
   formatDate(value: Date): string {
@@ -125,14 +121,14 @@ export class CampaignCreateComponent
 
   goNext() {
     if (this.activeStep === 0) {
-      if (!this.campaignName.trim()) {
+      if (!this.campaign.name.trim()) {
         this.showMessage('Error', 'Campaign name is required.', 'error');
         return;
       }
     }
 
     if (this.activeStep === 1) {
-      for (const d of this.campaignDate) {
+      for (const d of this.campaign.date) {
         if (!d.startDate || !d.endDate) {
           this.showMessage('Error', 'Please fill in all date ranges.', 'error');
           return;
@@ -164,19 +160,10 @@ export class CampaignCreateComponent
       header: 'Save Confirmation',
       accept: () => {
         this.isActive = false;
-        const screenList: CampaignScreenInsert[] = this.selectedScreen.map(
-          (s) => ({ screenId: s.id }),
-        );
+        this.campaign.screen = this.selectedScreen.map(s => ({ screenId: s.id }));
 
         this.campaignService
-          .addCampaign({
-            tenantId: 1,
-            name: this.campaignName,
-            remarks: this.campaignRemarks,
-            createdBy: 1,
-            date: this.campaignDate,
-            screen: screenList,
-          })
+          .addCampaign(this.campaign)
           .pipe(takeUntil(this.destroy))
           .subscribe({
             next: (response: ApiResponse<Campaign>) => {
@@ -188,7 +175,7 @@ export class CampaignCreateComponent
                 'success',
               );
             },
-            error: (err) => this.showMessage('Error', err.message, 'error'),
+            error: (err) => this.showMessage('Error', err.error?.message, 'error'),
           });
       },
       reject: () => {
@@ -198,6 +185,7 @@ export class CampaignCreateComponent
   }
   onCancel() {
     this.isActive = false;
+
   }
 
   ngOnDestroy(): void {

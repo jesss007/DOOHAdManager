@@ -1,4 +1,5 @@
-﻿using DoohAdManager.Model.Shared;
+﻿using DoohAdManager.Model.Application.INV;
+using DoohAdManager.Model.Shared;
 
 namespace DoohAdManager.Model.Application.DBO
 {
@@ -32,6 +33,7 @@ namespace DoohAdManager.Model.Application.DBO
         public int Id { get; set; }
         public int CampaignId { get; set; }
         public int ScreenId { get; set; }
+        public required string ScreenName { get; set; }
     }
 
     public class CampaignInsert

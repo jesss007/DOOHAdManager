@@ -15,6 +15,7 @@ import { FileUploadModule } from "primeng/fileupload";
 import { StepperModule } from "primeng/stepper";
 import { CheckboxModule } from "primeng/checkbox";
 import { OverlayModule } from "primeng/overlay";
+import { TabPanel, TabViewModule } from "primeng/tabview";
 
 export const sharedImports = [
     CommonModule,
@@ -34,5 +35,6 @@ export const sharedImports = [
     CalendarModule,
     StepperModule,
     CheckboxModule,
-    OverlayModule
+    OverlayModule,
+    TabViewModule
 ]

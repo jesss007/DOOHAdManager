@@ -14,12 +14,12 @@
 
             <div class="field">
               <label>Campaign Name <span class="req">*</span></label>
-              <input pInputText [(ngModel)]="campaignName" placeholder="Enter campaign name" />
+              <input pInputText [(ngModel)]="campaign.name" placeholder="Enter campaign name" />
             </div>
 
             <div class="field">
               <label>Remarks</label>
-              <input pInputText [(ngModel)]="campaignRemarks" placeholder="Optional notes..." />
+              <input pInputText [(ngModel)]="campaign.remarks" placeholder="Optional notes..." />
             </div>
 
             <div class="footer">
@@ -35,7 +35,7 @@
         <p-stepperPanel header="Dates">
           <ng-template pTemplate="content">
 
-            <div *ngFor="let date of campaignDate; let i = index" class="date-row">
+            <div *ngFor="let date of campaign.date; let i = index" class="date-row">
               <div class="field">
                 <label>Start Date <span class="req">*</span></label>
                 <p-calendar [(ngModel)]="date.startDate" dateFormat="yy-mm-dd"
@@ -132,16 +132,16 @@
             <div class="summary">
               <div class="row">
                 <span class="key">Name</span>
-                <span class="val">{{ campaignName }}</span>
+                <span class="val">{{ campaign.name }}</span>
               </div>
-              <div class="row" *ngIf="campaignRemarks">
+              <div class="row" *ngIf="campaign.remarks">
                 <span class="key">Remarks</span>
-                <span class="val">{{ campaignRemarks }}</span>
+                <span class="val">{{ campaign.remarks }}</span>
               </div>
               <div class="row">
                 <span class="key">Dates</span>
                 <div class="list">
-                  <span *ngFor="let d of campaignDate">
+                  <span *ngFor="let d of campaign.date">
                     {{ d.startDate }} → {{ d.endDate }}
                   </span>
                 </div>

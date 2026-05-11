@@ -1,4 +1,5 @@
 import { CampaignStatus } from "../../../../Shared/Models/enum.model";
+import { ScreenOperatingHour } from "../../../INV/Screen/Models/screen-operating-hour";
 
 export interface Campaign {
     id: number;
@@ -27,15 +28,27 @@ export interface CampaignScreen{
     id: number;
     campaignId: number;
     screenId : number;
+    screenName: string;
+    address: string;
+    operatingHours : ScreenOperatingHour[];
 }
 
-export interface CampaignInsert {
+export class CampaignInsert {
     tenantId : number;
     name: string;
     remarks?: string;
     createdBy: number;
     date: CampaignDateInsert[];
     screen : CampaignScreenInsert[];
+
+    constructor() {
+    this.tenantId = 1;
+    this.name = '';
+    this.remarks = '';
+    this.createdBy = 1;
+    this.date = [{ startDate: '', endDate: '' }];
+    this.screen = [];
+  }
 }
 
 export interface CampaignDateInsert{
