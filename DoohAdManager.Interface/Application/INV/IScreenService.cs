@@ -14,7 +14,7 @@ namespace DoohAdManager.Interface.Application.INV
         Task<Screen?> InsertScreen(ScreenInsert screenInsert);
         Task<Screen?> UpdateScreen(ScreenUpdate screenUpdate);
         Task<Screen?> DeleteScreen(ScreenDelete screenDelete);
-        Task<List<ScreenDropdown>?> GetScreenDdl();
+        Task<List<ScreenDropdown>?> GetScreenDdl(int? campaignId = null);
 
     }
 

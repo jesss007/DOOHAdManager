@@ -72,11 +72,11 @@ namespace DoohAdManager.API.Controllers.Application.INV
 
         [HttpGet("Ddl")]
 
-        public async Task<IActionResult> GetScreenDdl()
+        public async Task<IActionResult> GetScreenDdl([FromQuery] int? campaignId = null)
         {
             try
             {
-                var response = await ss.GetScreenDdl();
+                var response = await ss.GetScreenDdl(campaignId);
                 return Ok(ApiResponse.Success(response));
             }
             catch(Exception ex)

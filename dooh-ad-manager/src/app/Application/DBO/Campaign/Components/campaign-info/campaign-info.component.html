@@ -81,10 +81,12 @@
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-s>
-              <tr>
+              <tr  [class.deleted-row]="s.screenDeleted">
                 <td>{{ s.screenName }}</td>
                 <td>
+                   <p-tag *ngIf="s.screenDeleted" value="Deleted" severity="danger" />
                     <button
+                    *ngIf="!s.screenDeleted"
                      pButton
                      icon ="pi pi-search"
                      class="p-button-text p-button-sm p-button-info"

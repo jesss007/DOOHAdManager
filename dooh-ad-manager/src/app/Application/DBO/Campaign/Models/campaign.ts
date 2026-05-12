@@ -1,5 +1,6 @@
 import { CampaignStatus } from "../../../../Shared/Models/enum.model";
 import { ScreenOperatingHour } from "../../../INV/Screen/Models/screen-operating-hour";
+import { CampaignMedia } from "./campaign-media";
 
 export interface Campaign {
     id: number;
@@ -15,6 +16,7 @@ export interface Campaign {
     deletedBy : number;
     date? : CampaignDate[];
     screen?: CampaignScreen[];
+    campaignMedia?: CampaignMedia[];
 }
 
 export interface CampaignDate{
@@ -31,6 +33,7 @@ export interface CampaignScreen{
     screenName: string;
     address: string;
     operatingHours : ScreenOperatingHour[];
+    screenDeleted: boolean;
 }
 
 export class CampaignInsert {

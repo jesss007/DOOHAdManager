@@ -7,7 +7,7 @@
       <button
         pButton
         icon="pi pi-plus"
-        label="Add Campaign"
+        label="Create Campaign"
         class="p-button-sm"
         (click)="campaigncreate.show()"
       ></button>
@@ -98,6 +98,14 @@
               tooltipPosition="top"
               (click)="onDelete(campaign)"
             ></button>
+            <button
+              pButton
+              icon="pi pi-paperclip"
+              class="p-button-text p-button-sm p-button-secondary"
+              pTooltip="Attach Media"
+              tooltipPosition="top"
+              (click)="campaignMedia.show(campaign)"
+            ></button>
           </div>
         </td>
       </tr>
@@ -135,3 +143,4 @@
 
 <campaign-create #campaigncreate (onSubmit)="onSave($event)"></campaign-create>
 <campaign-info #campaignInfo></campaign-info>
+<campaign-media-create-edit #campaignMedia></campaign-media-create-edit>

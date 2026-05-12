@@ -16,6 +16,7 @@ import { StepperModule } from "primeng/stepper";
 import { CheckboxModule } from "primeng/checkbox";
 import { OverlayModule } from "primeng/overlay";
 import { TabPanel, TabViewModule } from "primeng/tabview";
+import { InputNumberModule } from "primeng/inputnumber";
 
 export const sharedImports = [
     CommonModule,
@@ -36,5 +37,6 @@ export const sharedImports = [
     StepperModule,
     CheckboxModule,
     OverlayModule,
-    TabViewModule
+    TabViewModule,
+    InputNumberModule
 ]

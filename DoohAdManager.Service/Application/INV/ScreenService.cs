@@ -41,11 +41,11 @@ namespace DoohAdManager.Service.Application.INV
             }
         }
 
-        public async Task<List<ScreenDropdown>?> GetScreenDdl()
+        public async Task<List<ScreenDropdown>?> GetScreenDdl(int? campaignId = null)
         {
             try
             {
-                string json = JsonConvert.SerializeObject(new { });
+                string json = JsonConvert.SerializeObject(new { CampaignId = campaignId});
                 string result = await ds.RetrievalProcedure("inv.SpScreenDdl", json);
                 return JsonConvert.DeserializeObject<List<ScreenDropdown>?>(result);
             }

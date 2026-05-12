@@ -37,8 +37,10 @@ export class ScreenService {
     );
   }
 
-  getScreenDdl():Observable<ApiResponse<ScreenDropdown[]>> {
-    return this.http.get<ApiResponse<ScreenDropdown[]>>(`${this.baseUrl}/Ddl`);
+  getScreenDdl(campaignId? : number):Observable<ApiResponse<ScreenDropdown[]>> {
+    return this.http.get<ApiResponse<ScreenDropdown[]>>(`${this.baseUrl}/Ddl`+
+      (campaignId ? `?CampaignId=${campaignId}` : '')
+    );
   }
 
   getScreenById(id: number): Observable<ApiResponse<MvGridConfig<Screen>>> {

@@ -11,11 +11,13 @@ import {
 } from '../../../../../Shared/Models/response-model';
 import { CampaignCreateComponent } from '../campaign-create/campaign-create.component';
 import { CampaignInfoComponent } from '../campaign-info/campaign-info.component';
+import { CampaignMediaCreateEditComponent } from '../campaign-media/campaign-media-create-edit/campaign-media-create-edit.component';
+import { CampaignMedia } from '../../Models/campaign-media';
 
 @Component({
   selector: 'campaign',
   standalone: true,
-  imports: [sharedImports, CampaignCreateComponent, CampaignInfoComponent],
+  imports: [sharedImports, CampaignCreateComponent, CampaignInfoComponent, CampaignMediaCreateEditComponent],
   templateUrl: './campaign.component.html',
   styleUrl: './campaign.component.scss',
 })
@@ -25,6 +27,7 @@ export class CampaignComponent
 {
   private destroy = new Subject<void>();
   campaign: Campaign[] = [];
+  campaignMedia?: CampaignMedia[];
   currentPage = 1;
   pageSize = 5;
   totalRows = 0;

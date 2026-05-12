@@ -18,6 +18,7 @@ namespace DoohAdManager.Model.Application.DBO
         public int? DeletedBy { get; set; }
         public List<CampaignDate>? Date { get; set; }
         public List<CampaignScreen>? Screen { get; set; }
+        public List<CampaignMedia>? CampaignMedia { get; set; }
     }
 
     public class CampaignDate
@@ -33,6 +34,7 @@ namespace DoohAdManager.Model.Application.DBO
         public int Id { get; set; }
         public int CampaignId { get; set; }
         public int ScreenId { get; set; }
+        public bool ScreenDeleted { get; set; }
         public required string ScreenName { get; set; }
     }
 

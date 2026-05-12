@@ -36,3 +36,8 @@ export interface MediaDelete {
     id : number;
     deletedBy? : number;
 }
+
+export interface MediaDropdown{
+    id: number;
+    name: string;
+}

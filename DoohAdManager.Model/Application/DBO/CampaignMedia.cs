@@ -4,6 +4,7 @@
     {
         public int CampaignId { get; set; }
         public int ScreenId { get; set; }
+        public string? ScreenName { get; set; }
         public List<MediaItem>? Media { get; set; }
         public DateOnly PlayDate { get; set; }
         public DateTime CreatedAt { get; set; }
@@ -19,6 +20,7 @@
     {
         public int Id { get; set; }
         public int MediaId { get; set; }
+        public string? MediaName { get; set; }
         public int PlaySequence { get; set; }
     }
 
@@ -57,6 +59,7 @@
         public int CampaignId { get; set; }
         public int? ScreenId { get; set; }
         public DateOnly? PlayDate { get; set; }
+        public string? Search { get; set; }
     }
 
     public class CampaignMediaDelete

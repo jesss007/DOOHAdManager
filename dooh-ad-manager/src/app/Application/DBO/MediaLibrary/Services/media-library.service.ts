@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { MediaLibrary, MediaFilter, MediaDelete } from '../Models/media-library';
+import { MediaLibrary, MediaFilter, MediaDelete, MediaDropdown } from '../Models/media-library';
 import { Observable } from 'rxjs';
 import {
   ApiResponse,
@@ -55,6 +55,10 @@ export class MediaLibraryService {
     return this.http.delete<ApiResponse<MediaLibrary>>(
       `${this.baseUrl}?Id=${data.id}&DeletedBy=${data.deletedBy}`,
     );
+  }
+
+  getMediaDdl(): Observable<ApiResponse<MediaDropdown[]>>{
+    return this.http.get<ApiResponse<MediaDropdown[]>>(`${this.baseUrl}/Ddl`);
   }
 
 }

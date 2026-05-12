@@ -70,6 +70,10 @@
   }
 }
 
+.deleted-row {
+  opacity: 0.7;
+}
+
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
