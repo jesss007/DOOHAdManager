@@ -26,7 +26,7 @@ export class CampaignMediaInsert
     screenId: number;
     playDate: string;
     createdBy: number;
-    media: MediaIemInsert[];
+    media: MediaItemInsert[];
 
     constructor(){
         this.campaignId = 0;
@@ -37,7 +37,7 @@ export class CampaignMediaInsert
     }
 }
 
-export interface MediaIemInsert{
+export interface MediaItemInsert{
     mediaId: number;
     playSequence: number;
 }

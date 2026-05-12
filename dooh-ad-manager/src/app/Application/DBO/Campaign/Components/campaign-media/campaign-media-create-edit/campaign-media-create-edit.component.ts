@@ -41,7 +41,6 @@ export class CampaignMediaCreateEditComponent
 {
   @Output() onSave = new EventEmitter<CampaignMedia>();
 
-  
   private destroy = new Subject<void>();
 
   isActive = false;
@@ -50,11 +49,11 @@ export class CampaignMediaCreateEditComponent
   screen: ScreenDropdown[] = [];
   mediaList: MediaDropdown[] = [];
 
-  newSlot: CampaignMediaInsert = new CampaignMediaInsert();
+  newMedia: CampaignMediaInsert = new CampaignMediaInsert();
 
   campaignMedia: CampaignMedia[] = [];
   currentPage = 1;
-  pageSize = 5;
+  pageSize = 2;
   totalRows = 0;
 
   filter: CampaignMediaFilter = {
@@ -73,7 +72,9 @@ export class CampaignMediaCreateEditComponent
     super(injector);
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+
+  }
 
   show(campaign?: Campaign) {
     this.campaignData = campaign || null;
@@ -82,8 +83,8 @@ export class CampaignMediaCreateEditComponent
 
   reset() {
     this.isActive = false;
-    this.newSlot = new CampaignMediaInsert();
-    this.newSlot.campaignId = this.campaignData?.id ?? 0;
+    this.newMedia = new CampaignMediaInsert();
+    this.newMedia.campaignId = this.campaignData?.id ?? 0;
     this.filter.campaignId = this.campaignData?.id ?? 0;
     this.currentPage = 1;
     this.loadScreenDdl();
@@ -121,35 +122,35 @@ export class CampaignMediaCreateEditComponent
   //form
 
   onScreenChange() {
-    this.newSlot.media = [];
+    this.newMedia.media = [];
   }
 
   checkedMedia(mediaId: number) {
-    const index = this.newSlot.media.findIndex((m) => m.mediaId === mediaId);
+    const index = this.newMedia.media.findIndex((m) => m.mediaId === mediaId);
     if (index !== -1) {
-      this.newSlot.media = this.newSlot.media.filter(
+      this.newMedia.media = this.newMedia.media.filter(
         (m) => m.mediaId !== mediaId,
       );
     } else {
-      this.newSlot.media.push({
+      this.newMedia.media.push({
         mediaId: mediaId,
-        playSequence: this.newSlot.media.length + 1,
+        playSequence: this.newMedia.media.length + 1,
       });
     }
   }
 
   isMediaSelected(mediaId: number): boolean {
-    return this.newSlot.media.findIndex((m) => m.mediaId === mediaId) !== -1;
+    return this.newMedia.media.findIndex((m) => m.mediaId === mediaId) !== -1;
   }
 
   getSequence(mediaId: number): number {
     return (
-      this.newSlot.media.find((m) => m.mediaId === mediaId)?.playSequence ?? 0
+      this.newMedia.media.find((m) => m.mediaId === mediaId)?.playSequence ?? 0
     );
   }
 
   onSequenceChange(mediaId: number, value: number) {
-    const item = this.newSlot.media.find((m) => m.mediaId === mediaId);
+    const item = this.newMedia.media.find((m) => m.mediaId === mediaId);
     if (item) {
       item.playSequence = value;
     }
@@ -159,18 +160,18 @@ export class CampaignMediaCreateEditComponent
     return this.mediaList.find((m) => m.id === mediaId)?.name ?? '';
   }
 
-  onAddSlot() {
-    if (!this.newSlot.screenId) {
+  onAddMedia() {
+    if (!this.newMedia.screenId) {
       this.showMessage('Error', 'Please select a screen', 'error');
       return;
     }
 
-    if (!this.newSlot.playDate) {
+    if (!this.newMedia.playDate) {
       this.showMessage('Error', 'Please select a play date', 'error');
       return;
     }
 
-    const seqs = this.newSlot.media.map((m) => m.playSequence);
+    const seqs = this.newMedia.media.map((m) => m.playSequence);
     if (seqs.some((s) => s < 1)) {
       this.showMessage('Error', 'All sequences must be ≥ 1', 'error');
       return;
@@ -182,13 +183,13 @@ export class CampaignMediaCreateEditComponent
     }
 
     this.campaignMediaService
-      .addCampaignMedia(this.newSlot)
+      .addCampaignMedia(this.newMedia)
       .pipe(takeUntil(this.destroy))
       .subscribe({
         next: (res: ApiResponse<CampaignMedia>) => {
           this.showMessage('Success', 'Media attached successfully', 'success');
-          this.newSlot = new CampaignMediaInsert();
-          this.newSlot.campaignId = this.campaignData?.id ?? 0;
+          this.newMedia = new CampaignMediaInsert();
+          this.newMedia.campaignId = this.campaignData?.id ?? 0;
           this.loadCampaignMedia();
           this.onSave.emit(res.data);
         },
@@ -241,12 +242,12 @@ export class CampaignMediaCreateEditComponent
 
   //update sequence
 
-  onSequenceBlur(group: CampaignMedia) {
-    const seqs = group.media.map((m) => m.playSequence);
-    if (new Set(seqs).size !== seqs.length) {
-      this.showMessage('Error', 'Duplicate play sequence values', 'error');
-      return;
-    }
+  onSequenceSave(group: CampaignMedia) {
+  const seqs = group.media.map((m) => m.playSequence);
+  if (new Set(seqs).size !== seqs.length) {
+    this.showMessage('Error', 'Duplicate play sequence values', 'error');
+    return;
+  }
 
     const update = new CampaignMediaUpdate();
     update.campaignId = group.campaignId;
