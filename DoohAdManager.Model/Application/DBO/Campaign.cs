@@ -78,4 +78,4 @@ namespace DoohAdManager.Model.Application.DBO
         public CampaignStatus? Status { get; set; }
         public string? Search { get; set; }
     }
-}
+}    

@@ -72,17 +72,19 @@ export class CampaignMediaCreateEditComponent
     super(injector);
   }
 
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
   show(campaign?: Campaign) {
     this.campaignData = campaign || null;
-    this.reset();
+    this.isActive = false;
+
+    setTimeout(() => {
+      this.isActive = true;
+      this.reset();
+    }, 0);
   }
 
   reset() {
-    this.isActive = false;
     this.newMedia = new CampaignMediaInsert();
     this.newMedia.campaignId = this.campaignData?.id ?? 0;
     this.filter.campaignId = this.campaignData?.id ?? 0;
@@ -90,12 +92,10 @@ export class CampaignMediaCreateEditComponent
     this.loadScreenDdl();
     this.loadMediaDdl();
     this.loadCampaignMedia();
-    setTimeout(() => {
-      this.isActive = true;
-    }, 0);
   }
 
   loadScreenDdl() {
+    console.log('campaignId:', this.campaignData?.id);
     this.screenService
       .getScreenDdl(this.campaignData?.id ?? 0)
       .pipe(takeUntil(this.destroy))
@@ -120,11 +120,6 @@ export class CampaignMediaCreateEditComponent
   }
 
   //form
-
-  onScreenChange() {
-    this.newMedia.media = [];
-  }
-
   checkedMedia(mediaId: number) {
     const index = this.newMedia.media.findIndex((m) => m.mediaId === mediaId);
     if (index !== -1) {
@@ -230,7 +225,9 @@ export class CampaignMediaCreateEditComponent
   }
 
   onPageChange(page: number) {
-    if (page < 1 || page > this.totalPages) return;
+    if (page < 1 || page > this.totalPages) {
+      return;
+    } 
     this.currentPage = page;
     this.loadCampaignMedia();
   }
@@ -240,14 +237,18 @@ export class CampaignMediaCreateEditComponent
     this.loadCampaignMedia();
   }
 
+  getMediaUrl(url: string): string {
+  return this.mediaLibraryService.getMediaUrl(url);
+}
+
   //update sequence
 
   onSequenceSave(group: CampaignMedia) {
-  const seqs = group.media.map((m) => m.playSequence);
-  if (new Set(seqs).size !== seqs.length) {
-    this.showMessage('Error', 'Duplicate play sequence values', 'error');
-    return;
-  }
+    const seqs = group.media.map((m) => m.playSequence);
+    if (new Set(seqs).size !== seqs.length) {
+      this.showMessage('Error', 'Duplicate play sequence values', 'error');
+      return;
+    }
 
     const update = new CampaignMediaUpdate();
     update.campaignId = group.campaignId;
@@ -308,6 +309,7 @@ export class CampaignMediaCreateEditComponent
   }
 
   onClose() {
+    document.body.click();
     this.isActive = false;
   }
 

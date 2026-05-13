@@ -13,7 +13,7 @@
 
 .modal {
   background: #fff;
-  width: 860px;
+  width: 760px;
   max-width: 95vw;
   max-height: 90vh;
   border-radius: 12px;
@@ -102,6 +102,18 @@
   border-top: 1px solid #e9ecef;
 }
 
+::ng-deep .form-section .p-datatable {
+  .p-datatable-tbody > tr > td {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+
+  .p-datatable-thead > tr > th {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+}
+
 .attached-section {
   display: flex;
   flex-direction: column;
@@ -136,7 +148,7 @@
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  gap: 12px;
+  gap: 8px;
 }
 
 .group-sub-header th {
@@ -172,6 +184,36 @@
   }
 }
 
+.media-thumb {
+  width: 50px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .thumb-img {
+    width: 50px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+
+  .thumb-video {
+    width: 50px;
+    height: 40px;
+    background: #1e293b;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    i {
+      color: #fff;
+      font-size: 1.2rem;
+    }
+  }
+}
+
 .seq-cell {
   background: #ffffff;
   border-radius: 6px;
@@ -189,6 +231,15 @@
   }
 }
 
+.group-save-row td {
+  padding: 2px 8px;
+  border-top: 1px #e2e8f0;
+}
+
+.group-save-actions {
+  display: flex;
+  justify-content: flex-end;
+}
 .checked {
   background: #eff6ff !important;
 }
@@ -212,6 +263,8 @@
   .p-datatable-tbody > tr > td {
     text-align: center;
     vertical-align: middle;
+    padding: 8px 12px;
+    font-size: 0.82rem;
   }
 
   .p-datatable-tbody > tr > td:first-child {

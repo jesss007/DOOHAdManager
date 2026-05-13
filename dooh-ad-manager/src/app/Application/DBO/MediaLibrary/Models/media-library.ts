@@ -40,4 +40,6 @@ export interface MediaDelete {
 export interface MediaDropdown{
     id: number;
     name: string;
+    url: string;
+    isVideo: boolean;
 }

@@ -17,6 +17,7 @@ import { CheckboxModule } from "primeng/checkbox";
 import { OverlayModule } from "primeng/overlay";
 import { TabPanel, TabViewModule } from "primeng/tabview";
 import { InputNumberModule } from "primeng/inputnumber";
+import { SelectButtonModule } from "primeng/selectbutton";
 
 export const sharedImports = [
     CommonModule,

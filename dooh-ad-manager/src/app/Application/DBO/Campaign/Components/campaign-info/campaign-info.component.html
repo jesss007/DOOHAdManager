@@ -109,7 +109,7 @@
           <p-table [value]="selectedCampaign.campaignMedia || []">
             <ng-template pTemplate="body" let-group>
               <tr class="group-header-row">
-                <td colspan="3">
+                <td colspan="4">
                   <div class="group-header-content">
                     <span class="group-screen">{{ group.screenName }}</span>
                     <span class="group-date">
@@ -121,12 +121,25 @@
               </tr>
 
               <tr class="group-sub-header">
+                <th>Preview</th>
                 <th>Media</th>
                 <th>Type</th>
                 <th>Sequence</th>
               </tr>
 
               <tr *ngFor="let item of group.media">
+                <td>
+                  <div class="media-thumb">
+                    <img
+                      *ngIf="!item.mediaType"
+                      [src]="getMediaUrl(item.mediaUrl)"
+                      class="thumb-img"
+                    />
+                    <div *ngIf="item.mediaType" class="thumb-video">
+                      <i class="pi pi-video"></i>
+                    </div>
+                  </div>
+                </td>
                 <td>{{ item.mediaName }}</td>
                 <td>
                   <p-tag
@@ -140,7 +153,7 @@
 
             <ng-template pTemplate="emptymessage">
               <tr>
-                <td colspan="3" class="empty">No media attached yet.</td>
+                <td colspan="4" class="empty">No media attached yet.</td>
               </tr>
             </ng-template>
           </p-table>

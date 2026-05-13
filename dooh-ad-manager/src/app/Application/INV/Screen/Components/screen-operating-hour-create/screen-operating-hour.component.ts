@@ -28,7 +28,7 @@ export class ScreenOperatingHourComponent
   newSlot: ScreenOperatingHourInsert = new ScreenOperatingHourInsert();
 
   dayOptions = [
-    {label: 'Everyday', value: DayOfWeek.Everyday },
+    { label: 'Everyday', value: DayOfWeek.Everyday },
     { label: 'Sunday', value: DayOfWeek.Sunday },
     { label: 'Monday', value: DayOfWeek.Monday },
     { label: 'Tuesday', value: DayOfWeek.Tuesday },
@@ -48,12 +48,15 @@ export class ScreenOperatingHourComponent
   ngOnInit() {}
 
   show(screenId: number) {
-    this.isVisible = true;
+    this.isVisible = false;
     this.newSlot = new ScreenOperatingHourInsert();
     this.newSlot.screenId = screenId;
-    this.loadOperatingHours(screenId);
+    setTimeout(() => {
+      this.isVisible = true;
+      this.loadOperatingHours(screenId);
+    }, 0);
   }
-  
+
   loadOperatingHours(screenId: number) {
     this.screenOperatingHourService
       .getOperatingHour(screenId)
@@ -70,9 +73,14 @@ export class ScreenOperatingHourComponent
   }
 
   addSlot() {
-
-    this.newSlot.startTime = this.newSlot.startTime.length === 5 ? this.newSlot.startTime + ':00' : this.newSlot.startTime;
-    this.newSlot.endTime = this.newSlot.endTime.length === 5 ? this.newSlot.endTime + ':00' : this.newSlot.endTime;
+    this.newSlot.startTime =
+      this.newSlot.startTime.length === 5
+        ? this.newSlot.startTime + ':00'
+        : this.newSlot.startTime;
+    this.newSlot.endTime =
+      this.newSlot.endTime.length === 5
+        ? this.newSlot.endTime + ':00'
+        : this.newSlot.endTime;
     this.screenOperatingHourService
       .insertOperatingHour(this.newSlot)
       .pipe(takeUntil(this.destroy))
@@ -109,6 +117,7 @@ export class ScreenOperatingHourComponent
   }
 
   close() {
+    document.body.click();
     this.isVisible = false;
     this.operatingHour = [];
   }

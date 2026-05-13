@@ -168,6 +168,36 @@
   gap: 6px;
 }
 
+.media-thumb {
+  width: 50px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .thumb-img {
+    width: 50px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+
+  .thumb-video {
+    width: 50px;
+    height: 40px;
+    background: #1e293b;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    i {
+      color: #fff;
+      font-size: 1.2rem;
+    }
+  }
+}
+
 .group-sub-header th {
   background: #eef2f7;
   font-size: 0.75rem;

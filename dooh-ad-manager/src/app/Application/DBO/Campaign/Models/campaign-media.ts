@@ -17,6 +17,7 @@ export interface MediaItem{
     mediaId: number;
     mediaName: string;
     mediaType: string;
+    mediaUrl: string;
     playSequence: number;
 }
 

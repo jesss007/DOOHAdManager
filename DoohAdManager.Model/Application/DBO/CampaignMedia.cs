@@ -21,6 +21,8 @@
         public int Id { get; set; }
         public int MediaId { get; set; }
         public string? MediaName { get; set; }
+        public bool MediaType { get; set; }
+        public string? MediaUrl { get; set; }
         public int PlaySequence { get; set; }
     }
 
