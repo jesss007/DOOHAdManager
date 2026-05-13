@@ -25,6 +25,9 @@ export class ScreenOperatingHourComponent
   private destroy = new Subject<void>();
   isVisible = false;
   DayOfWeek = DayOfWeek;
+  startTimeDate: Date | null = null;
+  endTimeDate: Date | null = null;
+
   newSlot: ScreenOperatingHourInsert = new ScreenOperatingHourInsert();
 
   dayOptions = [
@@ -51,12 +54,13 @@ export class ScreenOperatingHourComponent
     this.isVisible = false;
     this.newSlot = new ScreenOperatingHourInsert();
     this.newSlot.screenId = screenId;
+    this.startTimeDate = null;
+    this.endTimeDate = null;
     setTimeout(() => {
       this.isVisible = true;
       this.loadOperatingHours(screenId);
     }, 0);
   }
-
   loadOperatingHours(screenId: number) {
     this.screenOperatingHourService
       .getOperatingHour(screenId)
@@ -73,14 +77,48 @@ export class ScreenOperatingHourComponent
   }
 
   addSlot() {
-    this.newSlot.startTime =
-      this.newSlot.startTime.length === 5
-        ? this.newSlot.startTime + ':00'
-        : this.newSlot.startTime;
-    this.newSlot.endTime =
-      this.newSlot.endTime.length === 5
-        ? this.newSlot.endTime + ':00'
-        : this.newSlot.endTime;
+    if (this.startTimeDate) {
+      this.newSlot.startTime = this.startTimeDate.toTimeString().slice(0, 8);
+    }
+    if (this.endTimeDate) {
+      this.newSlot.endTime = this.endTimeDate.toTimeString().slice(0, 8);
+    }
+
+    if (
+      this.startTimeDate &&
+      this.endTimeDate &&
+      this.startTimeDate >= this.endTimeDate
+    ) {
+      this.showMessage(
+        'Warning',
+        'Open time must be less than close time',
+        'warn',
+      );
+      return;
+    }
+
+    const hasOverlap = this.operatingHour.some((h) => {
+      if (
+        h.dayOfWeek !== this.newSlot.dayOfWeek &&
+        h.dayOfWeek !== DayOfWeek.Everyday &&
+        this.newSlot.dayOfWeek !== DayOfWeek.Everyday
+      ) {
+        return false;
+      }
+      return (
+        this.newSlot.startTime < h.endTime && this.newSlot.endTime > h.startTime
+      );
+    });
+
+    if (hasOverlap) {
+      this.showMessage(
+        'Warning',
+        'This slot overlaps with an existing slot',
+        'warn',
+      );
+      return;
+    }
+
     this.screenOperatingHourService
       .insertOperatingHour(this.newSlot)
       .pipe(takeUntil(this.destroy))
@@ -90,11 +128,12 @@ export class ScreenOperatingHourComponent
             this.showMessage('Error', response.message, 'error');
             return;
           }
-
           this.operatingHour.push(response.data);
           const screenId = this.newSlot.screenId;
           this.newSlot = new ScreenOperatingHourInsert();
           this.newSlot.screenId = screenId;
+          this.startTimeDate = null;
+          this.endTimeDate = null;
           this.showMessage('Success', 'Slot added successfully', 'success');
         },
         error: (err) => this.showMessage('Error', err.error?.message, 'error'),
@@ -117,7 +156,6 @@ export class ScreenOperatingHourComponent
   }
 
   close() {
-    document.body.click();
     this.isVisible = false;
     this.operatingHour = [];
   }

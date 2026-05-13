@@ -1,18 +1,16 @@
-:host ::ng-deep .p-overlay {
-  position: fixed !important;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.45);
-  display: flex !important;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
+::ng-deep .campaign-dialog {
+  .p-dialog-header {
+    display: none;
+  }
+  .p-dialog-content {
+    padding: 0 !important;
+    border-radius: 16px;
+    overflow: hidden;
+  }
 }
-
 .modal {
   background: #fff;
+  pointer-events: auto;
   width: 920px;
   max-width: 95vw;
   max-height: 90vh;

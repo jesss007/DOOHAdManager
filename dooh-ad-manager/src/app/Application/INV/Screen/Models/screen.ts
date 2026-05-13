@@ -28,7 +28,7 @@ export class Screen {
     this.name = '';
     this.address = '';
     this.location = '';
-    this.resolution = '1920x1080';
+    this.resolution = '';
     this.status = ScreenStatus.Active;
     this.orientation = ScreenOrientation.Landscape;
   }

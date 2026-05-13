@@ -1,4 +1,4 @@
-<p-overlay [visible]="isActive" (onHide)="onCancel()">
+<p-overlay [visible]="isActive" (onHide)="onCancel()" (click)="$event.stopPropagation()">
   <div class="modal" >
 
     <div class="modal-header">
@@ -28,7 +28,7 @@
       <div class="form-row">
         <div class="form-group">
           <label>Resolution</label>
-          <input [(ngModel)]="screen.resolution" placeholder="1920x1080" />
+          <input [(ngModel)]="screen.resolution" />
           <span class="hint">
             <i class="pi pi-info-circle"></i>
             Default resolution is 1920x1080.

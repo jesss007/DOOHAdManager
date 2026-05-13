@@ -1,80 +1,122 @@
-<p-overlay [visible]="isActive">
-  <div class="modal" (click)="$event.stopPropagation()">
-
+<p-dialog
+  [(visible)]="isActive"
+  [modal]="true"
+  [dismissableMask]="false"
+  [draggable]="false"
+  [resizable]="false"
+  [closable]="false"
+  styleClass="campaign-dialog"
+>
+  <div class="modal">
     <div class="modal-header">
       <h2>Add Campaign</h2>
     </div>
 
     <div class="modal-body">
       <p-stepper [linear]="true" [(activeStep)]="activeStep">
-
         <!-- STEP 1 -->
         <p-stepperPanel header="Basic Info">
           <ng-template pTemplate="content">
-
             <div class="field">
               <label>Campaign Name <span class="req">*</span></label>
-              <input pInputText [(ngModel)]="campaign.name" placeholder="Enter campaign name" />
+              <input
+                pInputText
+                [(ngModel)]="campaign.name"
+                placeholder="Enter campaign name"
+              />
             </div>
 
             <div class="field">
               <label>Remarks</label>
-              <input pInputText [(ngModel)]="campaign.remarks" placeholder="Optional notes..." />
+              <input
+                pInputText
+                [(ngModel)]="campaign.remarks"
+                placeholder="Optional notes..."
+              />
             </div>
 
             <div class="footer">
               <span></span>
-              <button pButton label="Next" icon="pi pi-arrow-right" iconPos="right"
-                class="p-button-sm" (click)="goNext()"></button>
+              <button
+                pButton
+                label="Next"
+                icon="pi pi-arrow-right"
+                iconPos="right"
+                class="p-button-sm"
+                (click)="goNext()"
+              ></button>
             </div>
-
           </ng-template>
         </p-stepperPanel>
 
         <!-- STEP 2 -->
         <p-stepperPanel header="Dates">
           <ng-template pTemplate="content">
-
-            <div *ngFor="let date of campaign.date; let i = index" class="date-row">
+            <div
+              *ngFor="let date of campaign.date; let i = index"
+              class="date-row"
+            >
               <div class="field">
                 <label>Start Date <span class="req">*</span></label>
-                <p-calendar [(ngModel)]="date.startDate" dateFormat="yy-mm-dd"
-                  [showIcon]="true" appendTo="body"
-                  (onSelect)="date.startDate = formatDate($event)" />
+                <p-calendar
+                  [(ngModel)]="date.startDate"
+                  dateFormat="yy-mm-dd"
+                  [showIcon]="true"
+                  appendTo="body"
+                  [minDate]="minDate"
+                >
+                </p-calendar>
               </div>
               <div class="field">
                 <label>End Date <span class="req">*</span></label>
-                <p-calendar [(ngModel)]="date.endDate" dateFormat="yy-mm-dd"
-                  [showIcon]="true" appendTo="body"
-                  (onSelect)="date.endDate = formatDate($event)" />
+                <p-calendar
+                  [(ngModel)]="date.endDate"
+                  dateFormat="yy-mm-dd"
+                  [showIcon]="true"
+                  appendTo="body"
+                  [minDate]="date.startDate || minDate"
+                >
+                </p-calendar>
               </div>
               <button
-                pButton icon="pi pi-trash"
+                pButton
+                icon="pi pi-trash"
                 class="p-button-sm p-button-danger p-button-text trash-btn"
-                (click)="removeDate(i)">
-              </button>
+                (click)="removeDate(i)"
+              ></button>
             </div>
 
-            <button pButton label="Add New Date" icon="pi pi-plus"
+            <button
+              pButton
+              label="Add New Date"
+              icon="pi pi-plus"
               class="p-button-sm p-button-outlined p-button-secondary add-btn"
-              (click)="addDate()">
-            </button>
+              (click)="addDate()"
+            ></button>
 
             <div class="footer">
-              <button pButton label="Back" icon="pi pi-arrow-left"
+              <button
+                pButton
+                label="Back"
+                icon="pi pi-arrow-left"
                 class="p-button-sm p-button-secondary p-button-outlined"
-                (click)="goBack()"></button>
-              <button pButton label="Next" icon="pi pi-arrow-right" iconPos="right"
-                class="p-button-sm" (click)="goNext()"></button>
+                (click)="goBack()"
+              ></button>
+              <button
+                pButton
+                label="Next"
+                icon="pi pi-arrow-right"
+                iconPos="right"
+                class="p-button-sm"
+                (click)="goNext()"
+              ></button>
             </div>
-
           </ng-template>
         </p-stepperPanel>
 
         <!-- STEP 3 -->
         <p-stepperPanel header="Screens">
           <ng-template pTemplate="content">
-
             <p-table [value]="screen">
               <ng-template pTemplate="header">
                 <tr>
@@ -87,17 +129,22 @@
               <ng-template pTemplate="body" let-s>
                 <tr [class.checked]="isSelected(s)">
                   <td>
-                    <p-checkbox [binary]="true"
+                    <p-checkbox
+                      [binary]="true"
                       [ngModel]="isSelected(s)"
-                      (onChange)="checkedScreen(s)" />
+                      (onChange)="checkedScreen(s)"
+                    />
                   </td>
                   <td>{{ s.name }}</td>
                   <td>
-                    <button pButton icon="pi pi-search"
+                    <button
+                      pButton
+                      icon="pi pi-search"
                       class="p-button-sm p-button-text"
-                      pTooltip="View details" tooltipPosition="top"
-                      (click)="screenInfo.show(s.id)">
-                    </button>
+                      pTooltip="View details"
+                      tooltipPosition="top"
+                      (click)="screenInfo.show(s.id)"
+                    ></button>
                   </td>
                 </tr>
               </ng-template>
@@ -115,20 +162,28 @@
             </small>
 
             <div class="footer">
-              <button pButton label="Back" icon="pi pi-arrow-left"
+              <button
+                pButton
+                label="Back"
+                icon="pi pi-arrow-left"
                 class="p-button-sm p-button-secondary p-button-outlined"
-                (click)="goBack()"></button>
-              <button pButton label="Next" icon="pi pi-arrow-right" iconPos="right"
-                class="p-button-sm" (click)="goNext()"></button>
+                (click)="goBack()"
+              ></button>
+              <button
+                pButton
+                label="Next"
+                icon="pi pi-arrow-right"
+                iconPos="right"
+                class="p-button-sm"
+                (click)="goNext()"
+              ></button>
             </div>
-
           </ng-template>
         </p-stepperPanel>
 
         <!-- STEP 4 -->
         <p-stepperPanel header="Confirm">
           <ng-template pTemplate="content">
-
             <div class="summary">
               <div class="row">
                 <span class="key">Name</span>
@@ -142,7 +197,7 @@
                 <span class="key">Dates</span>
                 <div class="list">
                   <span *ngFor="let d of campaign.date">
-                    {{ d.startDate }} → {{ d.endDate }}
+                    {{ d.startDate | date:'yyyy-MM-dd' }} → {{ d.endDate | date:'yyyy-MM-dd' }}
                   </span>
                 </div>
               </div>
@@ -155,27 +210,36 @@
             </div>
 
             <div class="footer">
-              <button pButton label="Back" icon="pi pi-arrow-left"
+              <button
+                pButton
+                label="Back"
+                icon="pi pi-arrow-left"
                 class="p-button-sm p-button-secondary p-button-outlined"
-                (click)="goBack()"></button>
-              <button pButton label="Save" icon="pi pi-save"
+                (click)="goBack()"
+              ></button>
+              <button
+                pButton
+                label="Save"
+                icon="pi pi-save"
                 class="p-button-sm p-button-success"
-                (click)="onSave()"></button>
+                (click)="onSave()"
+              ></button>
             </div>
-
           </ng-template>
         </p-stepperPanel>
-
       </p-stepper>
     </div>
 
     <div class="modal-footer">
-      <button pButton label="Cancel" icon="pi pi-times"
+      <button
+        pButton
+        label="Cancel"
+        icon="pi pi-times"
         class="p-button-sm p-button-secondary p-button-text"
-        (click)="onCancel()"></button>
+        (click)="onCancel()"
+      ></button>
     </div>
-
   </div>
-</p-overlay>
+</p-dialog>
 
 <screen-info #screenInfo />

@@ -41,4 +41,9 @@ namespace DoohAdManager.Model.Shared
         Completed = 3, 
         Cancelled = 4
     }
+
+    public enum ScreenResolution
+    {
+
+    }
 }

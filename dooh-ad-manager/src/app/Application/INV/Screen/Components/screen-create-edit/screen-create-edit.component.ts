@@ -74,6 +74,10 @@ export class ScreenCreateEditComponent
       this.showMessage('Error', 'Address is required', 'error');
       return;
     }
+    if(!this.screen.resolution){
+      this.showMessage('Error', 'Resolution is required', 'error');
+      return;
+    }
 
     this.screen.tag = this.tagInput
       .split(',')

@@ -15,7 +15,6 @@ import {
   CampaignMediaFilter,
   CampaignMediaInsert,
   CampaignMediaUpdate,
-  MediaItem,
 } from '../../../Models/campaign-media';
 import { Campaign } from '../../../Models/campaign';
 import { ScreenDropdown } from '../../../../../INV/Screen/Models/screen';
@@ -227,7 +226,7 @@ export class CampaignMediaCreateEditComponent
   onPageChange(page: number) {
     if (page < 1 || page > this.totalPages) {
       return;
-    } 
+    }
     this.currentPage = page;
     this.loadCampaignMedia();
   }
@@ -238,8 +237,8 @@ export class CampaignMediaCreateEditComponent
   }
 
   getMediaUrl(url: string): string {
-  return this.mediaLibraryService.getMediaUrl(url);
-}
+    return this.mediaLibraryService.getMediaUrl(url);
+  }
 
   //update sequence
 
@@ -253,9 +252,9 @@ export class CampaignMediaCreateEditComponent
     const update = new CampaignMediaUpdate();
     update.campaignId = group.campaignId;
     update.screenId = group.screenId;
-    update.playDate = group.playDate as unknown as string;
+    update.playDate = group.playDate;
     update.updatedBy = 1;
-    update.media = group.media.map((m: MediaItem) => ({
+    update.media = group.media.map((m) => ({
       id: m.id,
       playSequence: m.playSequence,
     }));
@@ -309,7 +308,6 @@ export class CampaignMediaCreateEditComponent
   }
 
   onClose() {
-    document.body.click();
     this.isActive = false;
   }
 

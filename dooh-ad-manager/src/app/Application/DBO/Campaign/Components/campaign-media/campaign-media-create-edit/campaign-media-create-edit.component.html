@@ -1,5 +1,13 @@
-<p-overlay [visible]="isActive">
-  <div class="modal" (click)="$event.stopPropagation()">
+<p-dialog
+  [(visible)]="isActive"
+  [modal]="true"
+  [dismissableMask]="false"
+  [draggable]="false"
+  [resizable]="false"
+  [closable]="false"
+  styleClass="campaign-dialog"
+>
+  <div class="modal">
     <div class="modal-header">
       <h2>{{ campaignData?.name }} : Attach Media</h2>
     </div>
@@ -256,4 +264,4 @@
       ></button>
     </div>
   </div>
-</p-overlay>
+</p-dialog>

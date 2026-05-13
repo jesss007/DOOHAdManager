@@ -42,9 +42,7 @@ export class MediaLibraryUploadComponent
     super(injector);
   }
 
-  ngOnInit() {
-    
-  }
+  ngOnInit() {}
 
   show() {
     this.reset();
@@ -58,9 +56,8 @@ export class MediaLibraryUploadComponent
     this.isVideo = false;
     this.isLoading = false;
     this.showFileUpload = false;
-  setTimeout(() => (this.showFileUpload = true), 0);
+    setTimeout(() => (this.showFileUpload = true), 0);
   }
-
 
   onFileSelect(event: any) {
     const file = event.files[0];
@@ -109,12 +106,20 @@ export class MediaLibraryUploadComponent
       });
   }
 
+  onRemoveFile(): void {
+    this.previewUrl = null;
+    this.selectedFile = null;
+    this.isVideo = false;
+
+    this.showFileUpload = false;
+    setTimeout(() => (this.showFileUpload = true), 0);
+  }
   onCancel() {
     this.isActive = false;
   }
 
   ngOnDestroy(): void {
-      this.destroy.next();
-      this.destroy.complete();
+    this.destroy.next();
+    this.destroy.complete();
   }
 }

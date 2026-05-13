@@ -1,12 +1,10 @@
-<p-overlay [visible]="isActive" (onHide)="onCancel()">
+<p-overlay [visible]="isActive" (onHide)="onCancel()" (click)="$event.stopPropagation()">
   <div class="modal">
-
     <div class="modal-header">
       <h2>Upload Media</h2>
     </div>
 
     <div class="modal-body">
-
       <div class="form-group">
         <label>Name</label>
         <input [(ngModel)]="name" placeholder="Enter media name" />
@@ -21,24 +19,51 @@
           [auto]="false"
           accept="image/*,video/*"
           (onSelect)="onFileSelect($event)"
-        /> 
+        />
       </div>
 
       <div class="form-group" *ngIf="previewUrl">
         <label>Preview</label>
-        <img
-          *ngIf="!isVideo" [src]="previewUrl" alt="Preview" class="preview-media" />
-        <video
-          *ngIf="isVideo" [src]="previewUrl" class="preview-media" >
-        </video>
-      </div>
 
+        <div class="preview-wrapper">
+          <button
+            class="preview-remove-btn"
+            (click)="onRemoveFile()"
+            title="Remove file"
+          >
+            <i class="pi pi-times"></i>
+          </button>
+          <img
+            *ngIf="!isVideo"
+            [src]="previewUrl"
+            alt="Preview"
+            class="preview-media"
+          />
+          <video
+            *ngIf="isVideo"
+            [src]="previewUrl"
+            class="preview-media"
+          ></video>
+        </div>
+      </div>
     </div>
 
     <div class="modal-footer">
-      <button pButton label="Cancel" icon="pi pi-times" class="p-button-sm p-button-secondary" (click)="onCancel()"></button>
-      <button pButton label="Upload" icon="pi pi-upload" class="p-button-sm" [loading]="isLoading" (click)="onSubmit()"></button>
+      <button
+        pButton
+        label="Cancel"
+        icon="pi pi-times"
+        class="p-button-sm p-button-secondary"
+        (click)="onCancel()"
+      ></button>
+      <button
+        pButton
+        label="Upload"
+        icon="pi pi-upload"
+        class="p-button-sm"
+        [loading]="isLoading"
+        (click)="onSubmit()"
+      ></button>
     </div>
-
   </div>
 </p-overlay>

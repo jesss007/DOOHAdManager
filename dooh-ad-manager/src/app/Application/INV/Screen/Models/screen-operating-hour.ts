@@ -29,7 +29,7 @@ export class ScreenOperatingHourInsert {
         this.startTime = '08:00:00';
         this.endTime = '22:00:00';
         this.dayOfWeek = DayOfWeek.Everyday;
-        this.avgAudienceCount = 0;
+        this.avgAudienceCount = 1;
     }
 }
 

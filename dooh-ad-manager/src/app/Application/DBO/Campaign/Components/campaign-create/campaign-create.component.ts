@@ -7,17 +7,12 @@ import {
   Output,
 } from '@angular/core';
 import { AppComponent } from '../../../../../app.component';
-import {
-  Campaign,
-  CampaignInsert
-} from '../../Models/campaign';
+import { Campaign, CampaignInsert } from '../../Models/campaign';
 import { Subject, takeUntil } from 'rxjs';
 import { CampaignService } from '../../Services/campaign.service';
 import { ScreenDropdown } from '../../../../INV/Screen/Models/screen';
 import { ScreenService } from '../../../../INV/Screen/Services/screen.service';
-import {
-  ApiResponse,
-} from '../../../../../Shared/Models/response-model';
+import { ApiResponse } from '../../../../../Shared/Models/response-model';
 import { sharedImports } from '../../../../../Shared/Imports/shared-imports';
 import { ScreenInfoComponent } from '../../../../INV/Screen/Components/screen-info/screen-info.component';
 
@@ -41,6 +36,7 @@ export class CampaignCreateComponent
 
   screen: ScreenDropdown[] = [];
   selectedScreen: ScreenDropdown[] = [];
+  minDate: Date = new Date();
 
   constructor(
     injector: Injector,
@@ -52,19 +48,16 @@ export class CampaignCreateComponent
 
   ngOnInit() {}
 
-  show(){
+  show() {
+    this.isActive = true;
     this.reset();
   }
 
   reset() {
-    this.isActive = false;
-    this.loadScreen();
-    setTimeout(() => {
     this.activeStep = 0;
+    this.loadScreen();
     this.campaign = new CampaignInsert();
     this.selectedScreen = [];
-    this.isActive = true;
-    },0);
   }
 
   loadScreen() {
@@ -96,14 +89,20 @@ export class CampaignCreateComponent
   }
 
   addDate() {
-    this.campaign.date.push({ startDate: '', endDate: '' });
+    this.campaign.date.push({
+      startDate: null,
+      endDate: null,
+    });
   }
-
   removeDate(index: number) {
     if (this.campaign.date.length === 1) {
-      this.campaign.date[0] = { startDate: '', endDate: '' };
+      this.campaign.date[0] = {
+        startDate: null,
+        endDate: null,
+      };
       return;
     }
+
     this.campaign.date.splice(index, 1);
   }
 
@@ -133,6 +132,45 @@ export class CampaignCreateComponent
           this.showMessage('Error', 'Please fill in all date ranges.', 'error');
           return;
         }
+
+        const start = new Date(d.startDate);
+        const end = new Date(d.endDate);
+
+        if (start.getTime() === end.getTime()) {
+          this.showMessage(
+            'Error',
+            'Start date and End date cannot be the same.',
+            'error',
+          );
+          return;
+        }
+
+        if (start > end) {
+          this.showMessage(
+            'Error',
+            'Start date cannot be greater than End date.',
+            'error',
+          );
+          return;
+        }
+      }
+
+      const ranges = this.campaign.date
+        .map((d) => ({
+          start: new Date(d.startDate!),
+          end: new Date(d.endDate!),
+        }))
+        .sort((a, b) => a.start.getTime() - b.start.getTime());
+
+      for (let i = 0; i < ranges.length - 1; i++) {
+        const current = ranges[i];
+        const next = ranges[i + 1];
+
+        // overlap condition
+        if (current.end >= next.start) {
+          this.showMessage('Error', 'Date ranges cannot overlap.', 'error');
+          return;
+        }
       }
     }
 
@@ -160,7 +198,9 @@ export class CampaignCreateComponent
       header: 'Save Confirmation',
       accept: () => {
         this.isActive = false;
-        this.campaign.screen = this.selectedScreen.map(s => ({ screenId: s.id }));
+        this.campaign.screen = this.selectedScreen.map((s) => ({
+          screenId: s.id,
+        }));
 
         this.campaignService
           .addCampaign(this.campaign)
@@ -175,7 +215,8 @@ export class CampaignCreateComponent
                 'success',
               );
             },
-            error: (err) => this.showMessage('Error', err.error?.message, 'error'),
+            error: (err) =>
+              this.showMessage('Error', err.error?.message, 'error'),
           });
       },
       reject: () => {
@@ -183,9 +224,9 @@ export class CampaignCreateComponent
       },
     });
   }
+
   onCancel() {
     this.isActive = false;
-
   }
 
   ngOnDestroy(): void {

@@ -14,7 +14,7 @@ namespace DoohAdManager.Model.Application.INV
         public required string Name { get; set; }
         public required string Address { get; set; }
         public required string Location { get; set; }
-        public string Resolution { get; set; } = "1920x1080";
+        public required string Resolution { get; set; } 
         public ScreenStatus Status {  get; set; }
         public ScreenOrientation Orientation { get; set; }
         public List<string>? Tag { get; set; }
