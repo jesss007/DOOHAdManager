@@ -33,7 +33,7 @@ export class CampaignInfoComponent
   constructor(
     injector: Injector,
     private campaignService: CampaignService,
-    private mediaLibraryService : MediaLibraryService
+    private mediaLibraryService: MediaLibraryService,
   ) {
     super(injector);
   }
@@ -63,7 +63,7 @@ export class CampaignInfoComponent
     }, 0);
   }
 
-   getMediaUrl(url: string): string {
+  getMediaUrl(url: string): string {
     return this.mediaLibraryService.getMediaUrl(url);
   }
 

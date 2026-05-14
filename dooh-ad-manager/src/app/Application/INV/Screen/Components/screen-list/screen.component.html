@@ -114,7 +114,7 @@
         </td>
         <td>
           <div class="action-buttons">
-             <button
+            <button
               pButton
               icon="pi pi-eye"
               class="p-button-text p-button-sm p-button-info"
@@ -160,8 +160,11 @@
 
   <div class="pagination-wrapper">
     <div class="info">
-      Showing {{ offset + 1 }} to {{ offset + screens.length }} of
-      {{ totalRows }} screens
+      <ng-container *ngIf="totalRows > 0">
+        Showing {{ offset + 1 }} to {{ offset + screens.length }} of
+        {{ totalRows }} screens
+      </ng-container>
+      <ng-container *ngIf="totalRows === 0"> No records found </ng-container>
     </div>
     <div class="pagination">
       <p-button

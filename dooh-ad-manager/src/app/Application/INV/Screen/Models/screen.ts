@@ -1,4 +1,4 @@
-import { ScreenStatus, ScreenOrientation } from "../../../../Shared/Models/enum.model";
+import { ScreenStatus, ScreenOrientation, ScreenResolution } from "../../../../Shared/Models/enum.model";
 import { ScreenOperatingHour } from "./screen-operating-hour";
 
 export class Screen {
@@ -7,7 +7,7 @@ export class Screen {
     name : string;
     address: string;
     location: string;
-    resolution : string;
+    resolution : ScreenResolution;
     status : ScreenStatus;
     orientation : ScreenOrientation;
     tag? : string[];
@@ -28,7 +28,7 @@ export class Screen {
     this.name = '';
     this.address = '';
     this.location = '';
-    this.resolution = '';
+    this.resolution = ScreenResolution.R1920x1080;
     this.status = ScreenStatus.Active;
     this.orientation = ScreenOrientation.Landscape;
   }

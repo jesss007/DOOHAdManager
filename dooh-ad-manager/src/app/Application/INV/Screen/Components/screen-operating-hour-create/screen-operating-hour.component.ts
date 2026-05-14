@@ -25,8 +25,8 @@ export class ScreenOperatingHourComponent
   private destroy = new Subject<void>();
   isVisible = false;
   DayOfWeek = DayOfWeek;
-  startTimeDate: Date | null = null;
-  endTimeDate: Date | null = null;
+  startTimeDate!: Date;
+  endTimeDate!: Date;
 
   newSlot: ScreenOperatingHourInsert = new ScreenOperatingHourInsert();
 
@@ -48,14 +48,21 @@ export class ScreenOperatingHourComponent
     super(injector);
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
+
+  private createTime(hours: number, minutes: number, seconds: number): Date {
+  const date = new Date();
+  date.setHours(hours, minutes, seconds, 0);
+  return date;
+}
 
   show(screenId: number) {
     this.isVisible = false;
     this.newSlot = new ScreenOperatingHourInsert();
     this.newSlot.screenId = screenId;
-    this.startTimeDate = null;
-    this.endTimeDate = null;
+    this.startTimeDate = this.createTime(8, 0, 0);
+    this.endTimeDate = this.createTime(22, 0, 0);
     setTimeout(() => {
       this.isVisible = true;
       this.loadOperatingHours(screenId);
@@ -77,25 +84,40 @@ export class ScreenOperatingHourComponent
   }
 
   addSlot() {
-    if (this.startTimeDate) {
-      this.newSlot.startTime = this.startTimeDate.toTimeString().slice(0, 8);
-    }
-    if (this.endTimeDate) {
-      this.newSlot.endTime = this.endTimeDate.toTimeString().slice(0, 8);
-    }
-
-    if (
-      this.startTimeDate &&
-      this.endTimeDate &&
-      this.startTimeDate >= this.endTimeDate
-    ) {
+    if (!this.startTimeDate || !this.endTimeDate) {
       this.showMessage(
         'Warning',
-        'Open time must be less than close time',
+        'Please select both Open and Close time.',
         'warn',
       );
       return;
     }
+
+    const toSeconds = (d: Date) =>
+      d.getHours() * 3600 + d.getMinutes() * 60 + d.getSeconds();
+
+    const start = toSeconds(this.startTimeDate);
+    const end = toSeconds(this.endTimeDate);
+
+    if (start === end) {
+      this.showMessage(
+        'Warning',
+        'Open time and Close time cannot be the same.',
+        'warn',
+      );
+      return;
+    }
+    if (start > end) {
+      this.showMessage(
+        'Warning',
+        'Open time must be less than Close time.',
+        'warn',
+      );
+      return;
+    }
+    this.newSlot.startTime = this.startTimeDate.toTimeString().slice(0, 8);
+
+    this.newSlot.endTime = this.endTimeDate.toTimeString().slice(0, 8);
 
     const hasOverlap = this.operatingHour.some((h) => {
       if (
@@ -132,8 +154,6 @@ export class ScreenOperatingHourComponent
           const screenId = this.newSlot.screenId;
           this.newSlot = new ScreenOperatingHourInsert();
           this.newSlot.screenId = screenId;
-          this.startTimeDate = null;
-          this.endTimeDate = null;
           this.showMessage('Success', 'Slot added successfully', 'success');
         },
         error: (err) => this.showMessage('Error', err.error?.message, 'error'),

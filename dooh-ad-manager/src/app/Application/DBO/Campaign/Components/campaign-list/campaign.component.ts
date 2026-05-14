@@ -17,7 +17,12 @@ import { CampaignMedia } from '../../Models/campaign-media';
 @Component({
   selector: 'campaign',
   standalone: true,
-  imports: [sharedImports, CampaignCreateComponent, CampaignInfoComponent, CampaignMediaCreateEditComponent],
+  imports: [
+    sharedImports,
+    CampaignCreateComponent,
+    CampaignInfoComponent,
+    CampaignMediaCreateEditComponent,
+  ],
   templateUrl: './campaign.component.html',
   styleUrl: './campaign.component.scss',
 })
@@ -83,8 +88,8 @@ export class CampaignComponent
   }
 
   onFilter() {
-   this.currentPage = 1;
-   this.loadCampaign();
+    this.currentPage = 1;
+    this.loadCampaign();
   }
 
   onClearFilter() {

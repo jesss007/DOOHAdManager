@@ -52,7 +52,7 @@ export class CampaignMediaCreateEditComponent
 
   campaignMedia: CampaignMedia[] = [];
   currentPage = 1;
-  pageSize = 2;
+  pageSize = 1;
   totalRows = 0;
 
   filter: CampaignMediaFilter = {
@@ -94,7 +94,6 @@ export class CampaignMediaCreateEditComponent
   }
 
   loadScreenDdl() {
-    console.log('campaignId:', this.campaignData?.id);
     this.screenService
       .getScreenDdl(this.campaignData?.id ?? 0)
       .pipe(takeUntil(this.destroy))
@@ -165,12 +164,12 @@ export class CampaignMediaCreateEditComponent
       return;
     }
 
-    const seqs = this.newMedia.media.map((m) => m.playSequence);
-    if (seqs.some((s) => s < 1)) {
-      this.showMessage('Error', 'All sequences must be ≥ 1', 'error');
+    if (this.newMedia.media.length === 0) {
+      this.showMessage('Error', 'Please select at least one media', 'error');
       return;
     }
 
+    const seqs = this.newMedia.media.map((m) => m.playSequence);
     if (new Set(seqs).size !== seqs.length) {
       this.showMessage('Error', 'Duplicate play sequence values', 'error');
       return;
@@ -219,6 +218,7 @@ export class CampaignMediaCreateEditComponent
 
   onClearSearch() {
     this.filter.search = undefined;
+    this.filter.playDate = null;
     this.currentPage = 1;
     this.loadCampaignMedia();
   }

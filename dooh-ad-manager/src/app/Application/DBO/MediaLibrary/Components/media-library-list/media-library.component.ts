@@ -116,7 +116,7 @@ export class MediaLibraryComponent
 
   onDelete(media: MediaLibrary) {
     this.confirmAction({
-      message: 'Are you sure you want to delete this media',
+      message: 'Deleting this media will also remove it from any campaigns it is assigned to. Are you sure?',
       header: 'Delete Confirmation',
       accept: () => {
         this.mediaLibraryService

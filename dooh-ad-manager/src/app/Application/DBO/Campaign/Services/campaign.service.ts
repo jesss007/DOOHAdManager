@@ -43,11 +43,11 @@ export class CampaignService {
     return this.http.post<ApiResponse<Campaign>>(this.baseUrl, data);
   }
 
-  getCampaignById (id : number) : Observable<ApiResponse<MvGridConfig<Campaign>>> {
-    return this.http.get<ApiResponse<MvGridConfig<Campaign>>> (
+  getCampaignById(id: number): Observable<ApiResponse<MvGridConfig<Campaign>>> {
+    return this.http.get<ApiResponse<MvGridConfig<Campaign>>>(
       `${this.baseUrl}?Offset=0&PageSize=1` +
-      `&Filter.TenantId=1` + 
-      `&Filter.CampaignId=${id}`
-    )
+        `&Filter.TenantId=1` +
+        `&Filter.CampaignId=${id}`,
+    );
   }
 }

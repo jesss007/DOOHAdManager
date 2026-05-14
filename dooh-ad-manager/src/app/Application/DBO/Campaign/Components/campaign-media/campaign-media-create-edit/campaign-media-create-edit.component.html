@@ -135,6 +135,16 @@
             placeholder="Search By Screen Name..."
             class="search-input"
           />
+          <p-calendar
+            [(ngModel)]="filter.playDate"
+            dateFormat="yy-mm-dd"
+            [showIcon]="true"
+            placeholder="Filter by Date"
+            appendTo="body"
+            [showClear]="true"
+            (onSelect)="filter.playDate = formatDate($event)"
+            (onClear)="filter.playDate = null"
+          />
           <button
             pButton
             icon="pi pi-search"
@@ -215,10 +225,9 @@
                 <div class="group-save-actions">
                   <button
                     pButton
+                    label="Update Sequence"
                     icon="pi pi-save"
                     class="p-button-text p-button-sm p-button-info"
-                    pTooltip="Update Sequence"
-                    tooltipPosition="top"
                     (click)="onSequenceSave(group)"
                   ></button>
                 </div>
@@ -234,8 +243,13 @@
 
         <div class="pagination-wrapper">
           <span class="info">
-            Showing {{ offset + 1 }} to {{ offset + campaignMedia.length }} of
-            {{ totalRows }}
+            <ng-container *ngIf="totalRows > 0">
+              Showing {{ offset + 1 }} to {{ offset + campaignMedia.length }} of
+              {{ totalRows }}
+            </ng-container>
+            <ng-container *ngIf="totalRows === 0">
+              No records found
+            </ng-container>
           </span>
           <div class="pagination">
             <p-button

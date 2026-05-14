@@ -101,6 +101,13 @@
   background: #fff;
 }
 
+.screen-table-scroll {
+  height: 320px;
+  overflow-y: auto;
+  border: 1px solid var(--surface-border);
+  border-radius: 6px;
+}
+
 .hint {
   display: flex;
   align-items: center;

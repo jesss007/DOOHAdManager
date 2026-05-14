@@ -1,7 +1,11 @@
 import { Component, Injector } from '@angular/core';
 import { sharedImports } from '../../../../../Shared/Imports/shared-imports';
 import { AppComponent } from '../../../../../app.component';
-import { DayOfWeek, ScreenStatus, ScreenOrientation } from '../../../../../Shared/Models/enum.model';
+import {
+  DayOfWeek,
+  ScreenStatus,
+  ScreenOrientation,
+} from '../../../../../Shared/Models/enum.model';
 import { Screen } from '../../Models/screen';
 import { ScreenService } from '../../Services/screen.service';
 import {

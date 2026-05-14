@@ -26,8 +26,8 @@ export class ScreenOperatingHourInsert {
 
     constructor() {
         this.screenId = 0;
-        this.startTime = '08:00:00';
-        this.endTime = '22:00:00';
+        this.startTime = '';
+        this.endTime = '';
         this.dayOfWeek = DayOfWeek.Everyday;
         this.avgAudienceCount = 1;
     }

@@ -14,6 +14,7 @@ import { ScreenService } from '../../Services/screen.service';
 import {
   ScreenStatus,
   ScreenOrientation,
+  ScreenResolution,
 } from '../../../../../Shared/Models/enum.model';
 import { ApiResponse } from '../../../../../Shared/Models/response-model';
 
@@ -35,6 +36,10 @@ export class ScreenCreateEditComponent
   screenData: Screen | null = null;
   tagInput: string = '';
   screen: Screen = new Screen();
+  resolutionOptions = Object.values(ScreenResolution).map((v) => ({
+    label: v,
+    value: v,
+  }));
 
   constructor(
     injector: Injector,
@@ -58,7 +63,7 @@ export class ScreenCreateEditComponent
       name: this.screenData?.name || '',
       address: this.screenData?.address || '',
       location: this.screenData?.location || '',
-      resolution: this.screenData?.resolution || '1920x1080',
+      resolution: this.screenData?.resolution || ScreenResolution.R1920x1080,
       status: this.screenData?.status ?? ScreenStatus.Active,
       orientation: this.screenData?.orientation || ScreenOrientation.Landscape,
       tag: this.screenData?.tag || [],
@@ -74,8 +79,24 @@ export class ScreenCreateEditComponent
       this.showMessage('Error', 'Address is required', 'error');
       return;
     }
-    if(!this.screen.resolution){
+    if (!this.screen.resolution) {
       this.showMessage('Error', 'Resolution is required', 'error');
+      return;
+    }
+
+    if (!this.screen.location?.trim()) {
+      this.showMessage('Error', 'Location is required', 'error');
+      return;
+    }
+
+    const latLngRegex =
+      /^-?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*-?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/;
+    if (!latLngRegex.test(this.screen.location.trim())) {
+      this.showMessage(
+        'Error',
+        'Location must be in latitude,longitude format (e.g. 27.7172,85.3240)',
+        'error',
+      );
       return;
     }
 
@@ -98,7 +119,8 @@ export class ScreenCreateEditComponent
               'success',
             );
           },
-          error: (err) => this.showMessage('Error', err.error?.message, 'error'),
+          error: (err) =>
+            this.showMessage('Error', err.error?.message, 'error'),
         });
     } else {
       this.screenService

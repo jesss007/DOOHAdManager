@@ -117,50 +117,50 @@
         <!-- STEP 3 -->
         <p-stepperPanel header="Screens">
           <ng-template pTemplate="content">
-            <p-table [value]="screen">
-              <ng-template pTemplate="header">
-                <tr>
-                  <th style="width: 40px"></th>
-                  <th>Name</th>
-                  <th style="width: 50px"></th>
-                </tr>
-              </ng-template>
+            <div class="screen-table-scroll">
+              <p-table [value]="screen">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th style="width: 40px"></th>
+                    <th>Name</th>
+                    <th style="width: 50px"></th>
+                  </tr>
+                </ng-template>
 
-              <ng-template pTemplate="body" let-s>
-                <tr [class.checked]="isSelected(s)">
-                  <td>
-                    <p-checkbox
-                      [binary]="true"
-                      [ngModel]="isSelected(s)"
-                      (onChange)="checkedScreen(s)"
-                    />
-                  </td>
-                  <td>{{ s.name }}</td>
-                  <td>
-                    <button
-                      pButton
-                      icon="pi pi-search"
-                      class="p-button-sm p-button-text"
-                      pTooltip="View details"
-                      tooltipPosition="top"
-                      (click)="screenInfo.show(s.id)"
-                    ></button>
-                  </td>
-                </tr>
-              </ng-template>
+                <ng-template pTemplate="body" let-s>
+                  <tr [class.checked]="isSelected(s)">
+                    <td>
+                      <p-checkbox
+                        [binary]="true"
+                        [ngModel]="isSelected(s)"
+                        (onChange)="checkedScreen(s)"
+                      />
+                    </td>
+                    <td>{{ s.name }}</td>
+                    <td>
+                      <button
+                        pButton
+                        icon="pi pi-search"
+                        class="p-button-sm p-button-text"
+                        pTooltip="View details"
+                        tooltipPosition="top"
+                        (click)="screenInfo.show(s.id)"
+                      ></button>
+                    </td>
+                  </tr>
+                </ng-template>
 
-              <ng-template pTemplate="emptymessage">
-                <tr>
-                  <td colspan="3" class="empty">No screens available.</td>
-                </tr>
-              </ng-template>
-            </p-table>
-
+                <ng-template pTemplate="emptymessage">
+                  <tr>
+                    <td colspan="3" class="empty">No screens available.</td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
             <small *ngIf="selectedScreen.length" class="hint">
               <i class="pi pi-check-circle"></i>
               {{ selectedScreen.length }} screen(s) selected
             </small>
-
             <div class="footer">
               <button
                 pButton
@@ -197,7 +197,8 @@
                 <span class="key">Dates</span>
                 <div class="list">
                   <span *ngFor="let d of campaign.date">
-                    {{ d.startDate | date:'yyyy-MM-dd' }} → {{ d.endDate | date:'yyyy-MM-dd' }}
+                    {{ d.startDate | date: "yyyy-MM-dd" }} →
+                    {{ d.endDate | date: "yyyy-MM-dd" }}
                   </span>
                 </div>
               </div>

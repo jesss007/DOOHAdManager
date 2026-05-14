@@ -36,7 +36,11 @@ export class CampaignCreateComponent
 
   screen: ScreenDropdown[] = [];
   selectedScreen: ScreenDropdown[] = [];
-  minDate: Date = new Date();
+  minDate: Date = (() => {
+    const d = new Date();
+    d.setDate(d.getDate() + 1); // tomorrow
+    return d;
+  })();
 
   constructor(
     injector: Injector,
@@ -136,15 +140,6 @@ export class CampaignCreateComponent
         const start = new Date(d.startDate);
         const end = new Date(d.endDate);
 
-        if (start.getTime() === end.getTime()) {
-          this.showMessage(
-            'Error',
-            'Start date and End date cannot be the same.',
-            'error',
-          );
-          return;
-        }
-
         if (start > end) {
           this.showMessage(
             'Error',
@@ -184,7 +179,6 @@ export class CampaignCreateComponent
         return;
       }
     }
-
     this.activeStep++;
   }
 

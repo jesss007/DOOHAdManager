@@ -1,8 +1,11 @@
-<p-overlay [visible]="isActive" (onHide)="onCancel()" (click)="$event.stopPropagation()">
-  <div class="modal" >
-
+<p-overlay
+  [visible]="isActive"
+  (onHide)="onCancel()"
+  (click)="$event.stopPropagation()"
+>
+  <div class="modal">
     <div class="modal-header">
-      <h2>{{ screenData ? 'Update Screen' : 'Add Screen' }}</h2>
+      <h2>{{ screenData ? "Update Screen" : "Add Screen" }}</h2>
     </div>
 
     <div class="modal-body">
@@ -18,17 +21,29 @@
 
       <div class="form-group">
         <label>Location</label>
-        <input [(ngModel)]="screen.location" placeholder="e.g. 27.7172, 85.3240" />
+        <input
+          [(ngModel)]="screen.location"
+          placeholder="e.g. 27.7172, 85.3240"
+        />
         <span class="hint">
           <i class="pi pi-info-circle"></i>
-          Open Google Maps → Right Click on location → Copy the coordinates shown at the top.
+          Open Google Maps → Right Click on location → Copy the coordinates
+          shown at the top.
         </span>
       </div>
 
       <div class="form-row">
         <div class="form-group">
           <label>Resolution</label>
-          <input [(ngModel)]="screen.resolution" />
+          <p-dropdown
+            [options]="resolutionOptions"
+            [(ngModel)]="screen.resolution"
+            optionLabel="label"
+            optionValue="value"
+            placeholder="Select Resolution"
+            appendTo="body"
+            class="w-full"
+          />
           <span class="hint">
             <i class="pi pi-info-circle"></i>
             Default resolution is 1920x1080.
@@ -63,11 +78,21 @@
         </span>
       </div>
     </div>
-
     <div class="modal-footer">
-      <button pButton label="Cancel" icon="pi pi-times" class="p-button-sm p-button-secondary" (click)="onCancel()"></button>
-      <button pButton label="Submit" icon="pi pi-check" class="p-button-sm" (click)="onSubmit()"></button>
+      <button
+        pButton
+        label="Cancel"
+        icon="pi pi-times"
+        class="p-button-sm p-button-secondary"
+        (click)="onCancel()"
+      ></button>
+      <button
+        pButton
+        label="Submit"
+        icon="pi pi-check"
+        class="p-button-sm"
+        (click)="onSubmit()"
+      ></button>
     </div>
-
   </div>
 </p-overlay>

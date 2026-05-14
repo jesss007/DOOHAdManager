@@ -1,4 +1,12 @@
-<p-overlay [visible]="isVisible">
+<p-dialog
+  [(visible)]="isVisible"
+  [modal]="true"
+  [dismissableMask]="false"
+  [draggable]="false"
+  [resizable]="false"
+  [closable]="false"
+  styleClass="screen-oh-dialog"
+>
   <div class="modal" (click)="$event.stopPropagation()">
     <div class="modal-header">
       <h2>Screen Operating Hours & Audience Reach</h2>
@@ -104,4 +112,4 @@
       ></button>
     </div>
   </div>
-</p-overlay>
+</p-dialog>

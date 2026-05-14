@@ -80,6 +80,7 @@ export class MediaLibraryUploadComponent
     }
     if (!this.name.trim()) {
       this.showMessage('Error', 'Name is required', 'error');
+      return;
     }
 
     this.isLoading = true;
