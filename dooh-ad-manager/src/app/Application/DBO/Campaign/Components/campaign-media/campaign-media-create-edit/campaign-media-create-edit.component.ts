@@ -86,6 +86,8 @@ export class CampaignMediaCreateEditComponent
     this.newMedia = new CampaignMediaInsert();
     this.newMedia.campaignId = this.campaignData?.id ?? 0;
     this.filter.campaignId = this.campaignData?.id ?? 0;
+    this.filter.search = undefined;
+    this.filter.playDate = undefined;
     this.currentPage = 1;
     this.loadScreenDdl();
     this.loadMediaDdl();
@@ -308,6 +310,7 @@ export class CampaignMediaCreateEditComponent
 
   onClose() {
     this.isActive = false;
+    this.reset();
   }
 
   ngOnDestroy(): void {

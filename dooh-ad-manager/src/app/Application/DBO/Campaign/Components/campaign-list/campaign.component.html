@@ -127,7 +127,7 @@
       <ng-container *ngIf="totalRows === 0"> No records found </ng-container>
     </div>
     <div class="pagination">
-      <p-button
+      <p-button *ngIf="totalRows > 0"
         icon="pi pi-angle-double-left"
         (onClick)="onPageChange(currentPage - 1)"
         [attr.disabled]="currentPage === 1 ? true : null"
