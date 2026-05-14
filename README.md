@@ -201,21 +201,6 @@ Defines which media assets will play on a screen during a campaign.
 
 ---
 
-# 📊 Proof Of Play
-
-Stores playback history for auditing and reporting.
-
-## Fields
-
-- Id
-- ScreenId
-- CampaignId
-- MediaId
-- PlayedAt
-- DurationPlayed
-
----
-
 # Database Tables
 
 ## Core Schema
