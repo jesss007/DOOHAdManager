@@ -8,15 +8,15 @@ This system manages digital advertising screens, media assets, and campaign sche
 
 # What This Project Does
 
-The system allows an operator to:
+The system allows an user to:
 
 - Create and manage digital advertising screens
 - Configure screen operating hours
 - Upload and manage media assets (images/videos)
 - Create advertising campaigns
 - Assign campaigns to screens
-- Schedule media playback for campaigns
-- Control playback order of media
+- Attach media for campaigns
+- Manage playback order of media
 - Manage campaign date ranges
 
 ---
@@ -107,7 +107,6 @@ Stores image and video advertisements.
 - Upload media
 - Delete media
 - Preview uploaded files
-- Video/Image support
 - Resolution & duration detection
 
 ## Fields
@@ -218,11 +217,7 @@ Defines which media assets will play on a screen during a campaign.
 - dbo.CampaignDate
 - dbo.CampaignScreen
 - dbo.CampaignMedia
-
-## Report Schema
-
-- report.ProofOfPlay
-
+  
 ---
 
 # How To Run The Project
@@ -245,9 +240,11 @@ cd dooh-ad-manager
 Update `appsettings.json`
 
 ```json
-"ConnectionStrings": {
-  "DefaultConnection": "Server=.;Database=DOOH_AD;Trusted_Connection=True;TrustServerCertificate=True"
-}
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=DESKTOP-S1VO68N\\SQLEXPRESS;Database=DOOH_AD;Trusted_Connection=True;TrustServerCertificate=True"
+  },
+
 ```
 
 ---
@@ -537,7 +534,7 @@ POST /api/Screen
 
 # Conclusion
 
-This project demonstrates a complete DOOH advertisement management workflow including:
+This project demonstrates basic DOOH advertisement management workflow including:
 
 - Screen management
 - Media management
