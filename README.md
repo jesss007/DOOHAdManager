@@ -25,13 +25,11 @@ The system allows an operator to:
 
 ## Backend
 - ASP.NET Core Web API
-- Entity Framework Core
 - Swagger / OpenAPI
 
 ## Frontend
-- Angular 20
+- Angular
 - PrimeNG
-- RxJS
 
 ## Database
 - Microsoft SQL Server
