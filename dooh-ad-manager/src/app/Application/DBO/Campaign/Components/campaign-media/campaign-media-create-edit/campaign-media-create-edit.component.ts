@@ -8,10 +8,9 @@ import {
 } from '@angular/core';
 import { sharedImports } from '../../../../../../Shared/Imports/shared-imports';
 import { AppComponent } from '../../../../../../app.component';
-import { Subject, take, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import {
   CampaignMedia,
-  CampaignMediaDeleted,
   CampaignMediaFilter,
   CampaignMediaInsert,
   CampaignMediaUpdate,

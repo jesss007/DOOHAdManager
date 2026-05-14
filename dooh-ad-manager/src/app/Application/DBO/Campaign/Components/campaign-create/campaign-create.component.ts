@@ -110,18 +110,6 @@ export class CampaignCreateComponent
     this.campaign.date.splice(index, 1);
   }
 
-  formatDate(value: Date): string {
-    const d = new Date(value);
-    const year = d.getFullYear();
-    const month = d.getMonth() + 1;
-    const day = d.getDate();
-
-    const mm = month < 10 ? '0' + month : '' + month;
-    const dd = day < 10 ? '0' + day : '' + day;
-
-    return year + '-' + mm + '-' + dd;
-  }
-
   goNext() {
     if (this.activeStep === 0) {
       if (!this.campaign.name.trim()) {
