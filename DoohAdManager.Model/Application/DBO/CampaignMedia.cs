@@ -1,11 +1,11 @@
 ﻿namespace DoohAdManager.Model.Application.DBO
 {
-    public class CampaignMedia
+    public class MvCampaignMedia
     {
         public int CampaignId { get; set; }
         public int ScreenId { get; set; }
         public string? ScreenName { get; set; }
-        public List<MediaItem>? Media { get; set; }
+        public List<MvMediaItem>? Media { get; set; }
         public DateOnly PlayDate { get; set; }
         public DateTime CreatedAt { get; set; }
         public int CreatedBy { get; set; }
@@ -16,7 +16,7 @@
         public int? DeletedBy { get; set; }
     }
 
-    public class MediaItem
+    public class MvMediaItem
     {
         public int Id { get; set; }
         public int MediaId { get; set; }
@@ -26,37 +26,37 @@
         public int PlaySequence { get; set; }
     }
 
-    public class CampaignMediaInsert
+    public class MvCampaignMediaAdd
     {
         public int CampaignId { get; set; }
         public int ScreenId { get; set; }
         public DateOnly PlayDate { get; set; }
         public int CreatedBy { get; set; }
-        public required List<MediaItemInsert> Media { get; set; }
+        public required List<MvMediaItemAdd> Media { get; set; }
     }
 
-    public class MediaItemInsert
+    public class MvMediaItemAdd
     {
         public int MediaId { get; set; }
         public int PlaySequence { get; set; }
     }
 
-    public class CampaignMediaUpdate
+    public class MvCampaignMediaUpdate
     {
         public int CampaignId { get; set; }
         public int ScreenId { get; set; }
         public DateOnly PlayDate { get; set; }
         public int UpdatedBy { get; set; }
-        public required List<MediaItemUpdate> Media { get; set; }
+        public required List<MvMediaItemUpdate> Media { get; set; }
     }
 
-    public class MediaItemUpdate
+    public class MvMediaItemUpdate
     {
         public int Id { get; set; }
         public int PlaySequence { get; set; }
     }
 
-    public class CampaignMediaFilter
+    public class MvCampaignMediaFilter
     {
         public int CampaignId { get; set; }
         public int? ScreenId { get; set; }
@@ -64,13 +64,13 @@
         public string? Search { get; set; }
     }
 
-    public class CampaignMediaDelete
+    public class MvCampaignMediaDelete
     {
         public int Id { get; set; }
         public int DeletedBy { get; set; }
     }
 
-    public class CampaignMediaDeleted
+    public class MvCampaignMediaDeleted
     {
         public int Id { get; set; }
         public int CampaignId { get; set; }

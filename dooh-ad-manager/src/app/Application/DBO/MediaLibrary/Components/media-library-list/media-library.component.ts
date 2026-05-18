@@ -1,7 +1,7 @@
 import { Component, Injector, OnDestroy, OnInit } from '@angular/core';
 import { AppComponent } from '../../../../../app.component';
-import { share, Subject, takeUntil } from 'rxjs';
-import { MediaLibrary, MediaFilter } from '../../Models/media-library';
+import { Subject, takeUntil } from 'rxjs';
+import { MvMediaLibrary, MvMediaFilter } from '../../Models/media-library';
 import { MediaLibraryService } from '../../Services/media-library.service';
 import {
   ApiResponse,
@@ -21,16 +21,16 @@ export class MediaLibraryComponent
   extends AppComponent
   implements OnInit, OnDestroy
 {
-  private destroy = new Subject<void>();
+  private destroy$ = new Subject<void>();
 
-  mediaList: MediaLibrary[] = [];
+  mediaList: MvMediaLibrary[] = [];
   currentPage = 1;
   pageSize = 5;
   totalRows = 0;
-  selectedMedia: MediaLibrary | null = null;
+  selectedMedia: MvMediaLibrary | null = null;
   previewVisible = false;
 
-  filter: MediaFilter = {
+  filter: MvMediaFilter = {
     tenantId: 1,
     search: undefined,
     isVideo: undefined,
@@ -68,9 +68,9 @@ export class MediaLibraryComponent
   loadMedia() {
     this.mediaLibraryService
       .getMedia(this.offset, this.pageSize, this.filter)
-      .pipe(takeUntil(this.destroy))
+      .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (response: ApiResponse<MvGridConfig<MediaLibrary>>) => {
+        next: (response: ApiResponse<MvGridConfig<MvMediaLibrary>>) => {
           this.mediaList = response.data.data ?? [];
           this.totalRows = response.data.totalRows;
         },
@@ -114,16 +114,16 @@ export class MediaLibraryComponent
     this.loadMedia();
   }
 
-  onDelete(media: MediaLibrary) {
+  onDelete(media: MvMediaLibrary) {
     this.confirmAction({
       message: 'Deleting this media will also remove it from any campaigns it is assigned to. Are you sure?',
       header: 'Delete Confirmation',
       accept: () => {
         this.mediaLibraryService
           .deleteMedia({ id: media.id, deletedBy: 1 })
-          .pipe(takeUntil(this.destroy))
+          .pipe(takeUntil(this.destroy$))
           .subscribe({
-            next: (response: ApiResponse<MediaLibrary>) => {
+            next: (response: ApiResponse<MvMediaLibrary>) => {
               this.mediaList = this.mediaList.filter(
                 (u) => u.id !== response.data.id,
               );
@@ -144,13 +144,13 @@ export class MediaLibraryComponent
     });
   }
 
-  onPreview(media: MediaLibrary) {
+  onPreview(media: MvMediaLibrary) {
     this.selectedMedia = media;
     this.previewVisible = true;
   }
 
   ngOnDestroy(): void {
-    this.destroy.next();
-    this.destroy.complete();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

@@ -9,7 +9,7 @@ import {
 import { sharedImports } from '../../../../../Shared/Imports/shared-imports';
 import { AppComponent } from '../../../../../app.component';
 import { Subject, takeUntil } from 'rxjs';
-import { Screen, ScreenInsert, ScreenUpdate } from '../../Models/screen';
+import { MvScreen, MvScreenAdd, MvScreenUpdate } from '../../Models/screen';
 import { ScreenService } from '../../Services/screen.service';
 import {
   ScreenStatus,
@@ -29,13 +29,13 @@ export class ScreenCreateEditComponent
   extends AppComponent
   implements OnInit, OnDestroy
 {
-  @Output() onSave = new EventEmitter<Screen>();
+  @Output() onSave = new EventEmitter<MvScreen>();
 
-  private destroy = new Subject<void>();
+  private destroy$ = new Subject<void>();
   isActive: boolean = false;
-  screenData: Screen | null = null;
+  screenData: MvScreen | null = null;
   tagInput: string = '';
-  screen: Screen = new Screen();
+  screen: MvScreen = new MvScreen();
   resolutionOptions = Object.values(ScreenResolution).map((v) => ({
     label: v,
     value: v,
@@ -49,7 +49,7 @@ export class ScreenCreateEditComponent
   }
   ngOnInit() {}
 
-  show(screen?: Screen) {
+  show(screen?: MvScreen) {
     this.screenData = screen || null;
     this.initializeForm();
     this.isActive = true;
@@ -107,10 +107,10 @@ export class ScreenCreateEditComponent
 
     if (this.screenData) {
       this.screenService
-        .updateScreen(this.screen as ScreenUpdate)
-        .pipe(takeUntil(this.destroy))
+        .updateScreen(this.screen as MvScreenUpdate)
+        .pipe(takeUntil(this.destroy$))
         .subscribe({
-          next: (response: ApiResponse<Screen>) => {
+          next: (response: ApiResponse<MvScreen>) => {
             this.isActive = false;
             this.onSave.emit(response.data);
             this.showMessage(
@@ -124,10 +124,10 @@ export class ScreenCreateEditComponent
         });
     } else {
       this.screenService
-        .addScreen(this.screen as ScreenInsert)
-        .pipe(takeUntil(this.destroy))
+        .addScreen(this.screen as MvScreenAdd)
+        .pipe(takeUntil(this.destroy$))
         .subscribe({
-          next: (response: ApiResponse<Screen>) => {
+          next: (response: ApiResponse<MvScreen>) => {
             if (!response.success) {
               this.showMessage('Error', response.message, 'error');
               return;
@@ -151,7 +151,7 @@ export class ScreenCreateEditComponent
   }
 
   ngOnDestroy(): void {
-    this.destroy.next();
-    this.destroy.complete();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

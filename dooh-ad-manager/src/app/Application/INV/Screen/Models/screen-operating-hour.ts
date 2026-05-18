@@ -1,6 +1,6 @@
 import { DayOfWeek } from "../../../../Shared/Models/enum.model";
 
-export interface ScreenOperatingHour{
+export interface MvScreenOperatingHour{
     id : number;
     screenId : number;
     startTime : string;
@@ -16,7 +16,7 @@ export interface ScreenOperatingHour{
     deletedBy?: number;
 }
 
-export class ScreenOperatingHourInsert {
+export class MvScreenOperatingHourAdd {
     screenId : number;
     startTime : string;
     endTime: string;
@@ -33,7 +33,7 @@ export class ScreenOperatingHourInsert {
     }
 }
 
-export interface ScreenOperatingHourDelete {
+export interface MvScreenOperatingHourDelete {
     id: number;
     deletedBy?: number;
 }

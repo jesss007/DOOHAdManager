@@ -5,9 +5,9 @@ namespace DoohAdManager.Interface.Application.DBO
 {
     public interface ICampaignMediaService
     {
-        Task<CampaignMedia?> InsertCampaignMedia(CampaignMediaInsert campaignMediaInsert);
-        Task<MvGridConfig<CampaignMedia>?> GetCampaignMedia(MvParamReqOption<CampaignMediaFilter> param);
-        Task<CampaignMedia?> UpdateCampaignMedia(CampaignMediaUpdate campaignMediaUpdate);
-        Task<CampaignMediaDeleted?> DeleteCampaignMedia(CampaignMediaDelete campaignMediaDelete);
+        Task<MvCampaignMedia?> AddCampaignMedia(MvCampaignMediaAdd campaignMediaAdd);
+        Task<MvGridConfig<MvCampaignMedia>?> GetCampaignMedia(MvParamReqOption<MvCampaignMediaFilter> param);
+        Task<MvCampaignMedia?> UpdateCampaignMedia(MvCampaignMediaUpdate campaignMediaUpdate);
+        Task<MvCampaignMediaDeleted?> DeleteCampaignMedia(MvCampaignMediaDelete campaignMediaDelete);
     }
 }

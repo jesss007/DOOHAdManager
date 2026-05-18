@@ -10,14 +10,14 @@ import { sharedImports } from '../../../../../../Shared/Imports/shared-imports';
 import { AppComponent } from '../../../../../../app.component';
 import { Subject, takeUntil } from 'rxjs';
 import {
-  CampaignMedia,
-  CampaignMediaFilter,
-  CampaignMediaInsert,
-  CampaignMediaUpdate,
+  MvCampaignMedia,
+  MvCampaignMediaFilter,
+  MvCampaignMediaAdd,
+  MvCampaignMediaUpdate,
 } from '../../../Models/campaign-media';
-import { Campaign } from '../../../Models/campaign';
-import { ScreenDropdown } from '../../../../../INV/Screen/Models/screen';
-import { MediaDropdown } from '../../../../MediaLibrary/Models/media-library';
+import { MvCampaign } from '../../../Models/campaign';
+import { MvScreenDropdown } from '../../../../../INV/Screen/Models/screen';
+import { MvMediaDropdown } from '../../../../MediaLibrary/Models/media-library';
 import { CampaignMediaService } from '../../../Services/campaign-media.service';
 import { MediaLibraryService } from '../../../../MediaLibrary/Services/media-library.service';
 import { ScreenService } from '../../../../../INV/Screen/Services/screen.service';
@@ -37,24 +37,24 @@ export class CampaignMediaCreateEditComponent
   extends AppComponent
   implements OnInit, OnDestroy
 {
-  @Output() onSave = new EventEmitter<CampaignMedia>();
+  @Output() onSave = new EventEmitter<MvCampaignMedia>();
 
-  private destroy = new Subject<void>();
+  private destroy$ = new Subject<void>();
 
   isActive = false;
-  campaignData: Campaign | null = null;
+  campaignData: MvCampaign | null = null;
 
-  screen: ScreenDropdown[] = [];
-  mediaList: MediaDropdown[] = [];
+  screen: MvScreenDropdown[] = [];
+  mediaList: MvMediaDropdown[] = [];
 
-  newMedia: CampaignMediaInsert = new CampaignMediaInsert();
+  newMedia: MvCampaignMediaAdd = new MvCampaignMediaAdd();
 
-  campaignMedia: CampaignMedia[] = [];
+  campaignMedia: MvCampaignMedia[] = [];
   currentPage = 1;
   pageSize = 1;
   totalRows = 0;
 
-  filter: CampaignMediaFilter = {
+  filter: MvCampaignMediaFilter = {
     campaignId: 0,
     screenId: undefined,
     playDate: undefined,
@@ -72,7 +72,7 @@ export class CampaignMediaCreateEditComponent
 
   ngOnInit() {}
 
-  show(campaign?: Campaign) {
+  show(campaign?: MvCampaign) {
     this.campaignData = campaign || null;
     this.isActive = false;
 
@@ -83,7 +83,7 @@ export class CampaignMediaCreateEditComponent
   }
 
   reset() {
-    this.newMedia = new CampaignMediaInsert();
+    this.newMedia = new MvCampaignMediaAdd();
     this.newMedia.campaignId = this.campaignData?.id ?? 0;
     this.filter.campaignId = this.campaignData?.id ?? 0;
     this.filter.search = undefined;
@@ -97,9 +97,9 @@ export class CampaignMediaCreateEditComponent
   loadScreenDdl() {
     this.screenService
       .getScreenDdl(this.campaignData?.id ?? 0)
-      .pipe(takeUntil(this.destroy))
+      .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (response: ApiResponse<ScreenDropdown[]>) => {
+        next: (response: ApiResponse<MvScreenDropdown[]>) => {
           this.screen = response.data ?? [];
         },
         error: (err) => this.showMessage('Error', err.error?.message, 'error'),
@@ -109,9 +109,9 @@ export class CampaignMediaCreateEditComponent
   loadMediaDdl() {
     this.mediaLibraryService
       .getMediaDdl()
-      .pipe(takeUntil(this.destroy))
+      .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (response: ApiResponse<MediaDropdown[]>) => {
+        next: (response: ApiResponse<MvMediaDropdown[]>) => {
           this.mediaList = response.data ?? [];
         },
         error: (err) => this.showMessage('Error', err.error?.message, 'error'),
@@ -178,11 +178,11 @@ export class CampaignMediaCreateEditComponent
 
     this.campaignMediaService
       .addCampaignMedia(this.newMedia)
-      .pipe(takeUntil(this.destroy))
+      .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (res: ApiResponse<CampaignMedia>) => {
+        next: (res: ApiResponse<MvCampaignMedia>) => {
           this.showMessage('Success', 'Media attached successfully', 'success');
-          this.newMedia = new CampaignMediaInsert();
+          this.newMedia = new MvCampaignMediaAdd();
           this.newMedia.campaignId = this.campaignData?.id ?? 0;
           this.loadCampaignMedia();
           this.onSave.emit(res.data);
@@ -202,9 +202,9 @@ export class CampaignMediaCreateEditComponent
   loadCampaignMedia() {
     this.campaignMediaService
       .getCampaignMedia(this.offset, this.pageSize, this.filter)
-      .pipe(takeUntil(this.destroy))
+      .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (res: ApiResponse<MvGridConfig<CampaignMedia>>) => {
+        next: (res: ApiResponse<MvGridConfig<MvCampaignMedia>>) => {
           this.campaignMedia = res.data.data ?? [];
           this.totalRows = res.data.totalRows;
         },
@@ -243,14 +243,14 @@ export class CampaignMediaCreateEditComponent
 
   //update sequence
 
-  onSequenceSave(group: CampaignMedia) {
+  onSequenceSave(group: MvCampaignMedia) {
     const seqs = group.media.map((m) => m.playSequence);
     if (new Set(seqs).size !== seqs.length) {
       this.showMessage('Error', 'Duplicate play sequence values', 'error');
       return;
     }
 
-    const update = new CampaignMediaUpdate();
+    const update = new MvCampaignMediaUpdate();
     update.campaignId = group.campaignId;
     update.screenId = group.screenId;
     update.playDate = group.playDate;
@@ -262,7 +262,7 @@ export class CampaignMediaCreateEditComponent
 
     this.campaignMediaService
       .updateCampaignMedia(update)
-      .pipe(takeUntil(this.destroy))
+      .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: () => this.showMessage('Success', 'Sequence updated', 'success'),
         error: (err) => this.showMessage('Error', err.error?.message, 'error'),
@@ -288,7 +288,7 @@ export class CampaignMediaCreateEditComponent
       accept: () => {
         this.campaignMediaService
           .deleteCampaignMedia({ id: itemId, deletedBy: 1 })
-          .pipe(takeUntil(this.destroy))
+          .pipe(takeUntil(this.destroy$))
           .subscribe({
             next: () => {
               this.showMessage(
@@ -314,7 +314,7 @@ export class CampaignMediaCreateEditComponent
   }
 
   ngOnDestroy(): void {
-    this.destroy.next();
-    this.destroy.complete();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

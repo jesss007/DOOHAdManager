@@ -1,8 +1,8 @@
 import { CampaignStatus } from '../../../../Shared/Models/enum.model';
-import { ScreenOperatingHour } from '../../../INV/Screen/Models/screen-operating-hour';
-import { CampaignMedia } from './campaign-media';
+import { MvScreenOperatingHour } from '../../../INV/Screen/Models/screen-operating-hour';
+import { MvCampaignMedia } from './campaign-media';
 
-export interface Campaign {
+export interface MvCampaign {
   id: number;
   tenantId: number;
   name: string;
@@ -14,35 +14,35 @@ export interface Campaign {
   isDeleted: boolean;
   deletedAt: Date;
   deletedBy: number;
-  date?: CampaignDate[];
-  screen?: CampaignScreen[];
-  campaignMedia?: CampaignMedia[];
+  date?: MvCampaignDate[];
+  screen?: MvCampaignScreen[];
+  campaignMedia?: MvCampaignMedia[];
 }
 
-export interface CampaignDate {
+export interface MvCampaignDate {
   id: number;
   campaignId: number;
   startDate: Date;
   endDate: Date;
 }
 
-export interface CampaignScreen {
+export interface MvCampaignScreen {
   id: number;
   campaignId: number;
   screenId: number;
   screenName: string;
   address: string;
-  operatingHours: ScreenOperatingHour[];
+  operatingHours: MvScreenOperatingHour[];
   screenDeleted: boolean;
 }
 
-export class CampaignInsert {
+export class MvCampaignCreate {
   tenantId: number;
   name: string;
   remarks?: string;
   createdBy: number;
-  date: CampaignDateInsert[];
-  screen: CampaignScreenInsert[];
+  date: MvCampaignDateCreate[];
+  screen: MvCampaignScreenCreate[];
 
   constructor() {
     this.tenantId = 1;
@@ -59,26 +59,26 @@ export class CampaignInsert {
   }
 }
 
-export interface CampaignDateInsert {
+export interface MvCampaignDateCreate {
   startDate: Date | null;
   endDate: Date | null;
 }
 
-export interface CampaignScreenInsert {
+export interface MvCampaignScreenCreate {
   screenId: number;
 }
 
-export interface CampaignUpdate {
+export interface MvCampaignUpdate {
   id: number;
   status: CampaignStatus;
 }
 
-export interface CampaignDelete {
+export interface MvCampaignDelete {
   id: number;
   deletedBy: number;
 }
 
-export interface CampaignFilter {
+export interface MvCampaignFilter {
   tenantId: number;
   campaignId?: number;
   status?: CampaignStatus;

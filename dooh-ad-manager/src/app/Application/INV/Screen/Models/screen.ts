@@ -1,7 +1,7 @@
 import { ScreenStatus, ScreenOrientation, ScreenResolution } from "../../../../Shared/Models/enum.model";
-import { ScreenOperatingHour } from "./screen-operating-hour";
+import { MvScreenOperatingHour } from "./screen-operating-hour";
 
-export class Screen {
+export class MvScreen {
     id : number;
     tenantId : number;
     name : string;
@@ -19,7 +19,7 @@ export class Screen {
     deletedAt? : Date;
     deletedBy? : number;
     selected?: boolean;
-    operatingHours?: ScreenOperatingHour[] | null; 
+    operatingHours?: MvScreenOperatingHour[] | null; 
     
 
     constructor() {
@@ -34,7 +34,7 @@ export class Screen {
   }
 }
 
-export interface ScreenInsert {
+export interface MvScreenAdd {
     tenantId : number;
     name: string;
     address: string;
@@ -46,7 +46,7 @@ export interface ScreenInsert {
     createdBy?: number;
 }
 
-export interface ScreenUpdate {
+export interface MvScreenUpdate {
     id: number;
     name: string;
     address : string;
@@ -58,12 +58,12 @@ export interface ScreenUpdate {
     updatedBy? : number
 }
 
-export interface ScreenDelete {
+export interface MvScreenDelete {
     id: number;
     deletedBy? : number;
 }
 
-export interface ScreenFilter {
+export interface MvScreenFilter {
     tenantId : number;
     id? : number;
     search?: string;
@@ -71,7 +71,7 @@ export interface ScreenFilter {
     orientation?: ScreenOrientation;
 }
 
-export interface ScreenDropdown{
+export interface MvScreenDropdown{
     id: number;
     name: string;
 }

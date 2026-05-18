@@ -12,11 +12,11 @@ namespace DoohAdManager.API.Controllers.Application.INV
     {
         [HttpPost]
 
-        public async Task<IActionResult> InsertScreenOperatingHour([FromBody] ScreenOperatingHourInsert screenOperatingHourInsert)
+        public async Task<IActionResult> AddScreenOperatingHour([FromBody] MvScreenOperatingHourAdd screenOperatingHourAdd)
         {
             try
             {
-                var response = await os.InsertScreenOperatingHour(screenOperatingHourInsert);
+                var response = await os.AddScreenOperatingHour(screenOperatingHourAdd);
                 return Ok(ApiResponse.Success(response));
             }
             catch (Exception ex)
@@ -41,7 +41,7 @@ namespace DoohAdManager.API.Controllers.Application.INV
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteScreenOperatingHour([FromQuery] ScreenOperatingHourDelete operatingHourDelete)
+        public async Task<IActionResult> DeleteScreenOperatingHour([FromQuery] MvScreenOperatingHourDelete operatingHourDelete)
         {
             try
             {

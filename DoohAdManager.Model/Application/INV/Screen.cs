@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DoohAdManager.Model.Application.INV
 {
-    public class Screen
+    public class MvScreen
     {
         public int Id { get; set; }
         public int TenantId { get; set; }
@@ -25,11 +25,11 @@ namespace DoohAdManager.Model.Application.INV
         public bool IsDeleted { get; set; }
         public DateTime? DeletedAt { get; set; }
         public int? DeletedBy { get; set; }
-        public List<ScreenOperatingHour>? OperatingHours { get; set; }
+        public List<MvScreenOperatingHour>? OperatingHours { get; set; }
 
     }
 
-    public class ScreenInsert
+    public class MvScreenAdd
     {
         public int TenantId { get; set; }
         public required string Name { get; set; }
@@ -42,7 +42,7 @@ namespace DoohAdManager.Model.Application.INV
         public int? CreatedBy { get; set; }
     }
 
-    public class ScreenUpdate
+    public class MvScreenUpdate
     {
         public int Id { get; set; }
         public required string Name { get; set; }
@@ -55,13 +55,13 @@ namespace DoohAdManager.Model.Application.INV
         public int? UpdatedBy { get; set; }
     }
 
-    public class ScreenDelete
+    public class MvScreenDelete
     {
         public int Id { get; set; }
         public int? DeletedBy { get; set; }
     }
 
-    public class ScreenFilter
+    public class MvScreenFilter
     {
         public int TenantId { get; set; }
         public string? Search { get; set; }
@@ -70,10 +70,10 @@ namespace DoohAdManager.Model.Application.INV
         public ScreenOrientation? Orientation { get; set; }
     }
 
-    public class ScreenDropdown
+    public class MvScreenDropdown
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public required string Name { get; set; }
     }
 
 }

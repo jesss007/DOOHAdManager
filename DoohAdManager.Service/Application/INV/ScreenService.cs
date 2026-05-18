@@ -13,13 +13,13 @@ namespace DoohAdManager.Service.Application.INV
 {
     public class ScreenService(IDataAccessService ds) : IScreenService
     {
-        public async Task<Screen?> DeleteScreen(ScreenDelete screenDelete)
+        public async Task<MvScreen?> DeleteScreen(MvScreenDelete screenDelete)
         {
             try
             {
                 string json = JsonConvert.SerializeObject(screenDelete);
                 string result = await ds.ActionProcedure("inv.SpScreenDel", json);
-                return JsonConvert.DeserializeObject<Screen?>(result);
+                return JsonConvert.DeserializeObject<MvScreen?>(result);
             }
             catch (Exception)
             {
@@ -27,13 +27,13 @@ namespace DoohAdManager.Service.Application.INV
             }
         }
 
-        public async Task<MvGridConfig<Screen>?> GetScreen(MvParamReqOption<ScreenFilter> param)
+        public async Task<MvGridConfig<MvScreen>?> GetScreen(MvParamReqOption<MvScreenFilter> param)
         {
             try
             {
                 string json = JsonConvert.SerializeObject(param);
                 string result = await ds.RetrievalProcedure("inv.SpScreenSel", json);
-                return JsonConvert.DeserializeObject<MvGridConfig<Screen>?>(result);
+                return JsonConvert.DeserializeObject<MvGridConfig<MvScreen>?>(result);
             }
             catch (Exception)
             {
@@ -41,13 +41,13 @@ namespace DoohAdManager.Service.Application.INV
             }
         }
 
-        public async Task<List<ScreenDropdown>?> GetScreenDdl(int? campaignId = null)
+        public async Task<List<MvScreenDropdown>?> GetScreenDdl(int? campaignId = null)
         {
             try
             {
                 string json = JsonConvert.SerializeObject(new { CampaignId = campaignId});
                 string result = await ds.RetrievalProcedure("inv.SpScreenDdl", json);
-                return JsonConvert.DeserializeObject<List<ScreenDropdown>?>(result);
+                return JsonConvert.DeserializeObject<List<MvScreenDropdown>?>(result);
             }
             catch (Exception)
             {
@@ -55,13 +55,13 @@ namespace DoohAdManager.Service.Application.INV
             }
         }
 
-        public async Task<Screen?> InsertScreen(ScreenInsert screenInsert)
+        public async Task<MvScreen?> AddScreen(MvScreenAdd screenAdd)
         {
             try
             {
-                string json = JsonConvert.SerializeObject(screenInsert);
+                string json = JsonConvert.SerializeObject(screenAdd);
                 string result = await ds.ActionProcedure("inv.SpScreenIns", json);
-                return JsonConvert.DeserializeObject<Screen?>(result);
+                return JsonConvert.DeserializeObject<MvScreen?>(result);
             }
             catch (Exception)
             {
@@ -69,13 +69,13 @@ namespace DoohAdManager.Service.Application.INV
             }
         }
 
-        public async Task<Screen?> UpdateScreen(ScreenUpdate screenUpdate)
+        public async Task<MvScreen?> UpdateScreen(MvScreenUpdate screenUpdate)
         {
             try
             {
                 string json = JsonConvert.SerializeObject(screenUpdate);
                 string result = await ds.ActionProcedure("inv.SpScreenUpd", json);
-                return JsonConvert.DeserializeObject<Screen?>(result);
+                return JsonConvert.DeserializeObject<MvScreen?>(result);
             }
             catch (Exception)
             {

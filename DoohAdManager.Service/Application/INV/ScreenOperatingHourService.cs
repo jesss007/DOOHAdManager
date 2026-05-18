@@ -12,13 +12,13 @@ namespace DoohAdManager.Service.Application.INV
 {
     public class ScreenOperatingHourService(IDataAccessService ds) : IScreenOperatingHourService
     {
-        public async Task<ScreenOperatingHour?> DeleteScreenOperatingHour(ScreenOperatingHourDelete operatingHourDelete)
+        public async Task<MvScreenOperatingHour?> DeleteScreenOperatingHour(MvScreenOperatingHourDelete operatingHourDelete)
         {
             try
             {
                 string json = JsonConvert.SerializeObject(operatingHourDelete);
                 string result = await ds.ActionProcedure("inv.SpScreenOperatingHourDel", json);
-                return JsonConvert.DeserializeObject<ScreenOperatingHour?>(result);
+                return JsonConvert.DeserializeObject<MvScreenOperatingHour?>(result);
             }
             catch (Exception)
             {
@@ -26,13 +26,13 @@ namespace DoohAdManager.Service.Application.INV
             }
         }
 
-        public async Task<List<ScreenOperatingHour>?> GetScreenOperatingHour(int screenId)
+        public async Task<List<MvScreenOperatingHour>?> GetScreenOperatingHour(int screenId)
         {
             try
             {
                 string json = JsonConvert.SerializeObject(new { ScreenId = screenId });
                 string result = await ds.RetrievalProcedure("inv.SpScreenOperatingHourSel", json);
-                return JsonConvert.DeserializeObject<List<ScreenOperatingHour>?>(result);
+                return JsonConvert.DeserializeObject<List<MvScreenOperatingHour>?>(result);
             }
             catch (Exception)
             {
@@ -40,13 +40,13 @@ namespace DoohAdManager.Service.Application.INV
             }
         }
 
-        public async Task<ScreenOperatingHour?> InsertScreenOperatingHour(ScreenOperatingHourInsert operatingHourInsert)
+        public async Task<MvScreenOperatingHour?> AddScreenOperatingHour(MvScreenOperatingHourAdd operatingHourAdd)
         {
             try
             {
-                string json = JsonConvert.SerializeObject(operatingHourInsert);
+                string json = JsonConvert.SerializeObject(operatingHourAdd);
                 string result = await ds.ActionProcedure("inv.SpScreenOperatingHourIns", json);
-                return JsonConvert.DeserializeObject<ScreenOperatingHour?>(result);
+                return JsonConvert.DeserializeObject<MvScreenOperatingHour?>(result);
             }
             catch (Exception)
             {

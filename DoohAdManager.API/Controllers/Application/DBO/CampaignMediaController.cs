@@ -10,11 +10,11 @@ namespace DoohAdManager.API.Controllers.Application.DBO
     {
         [HttpPost]
 
-        public async Task<IActionResult> InsertCampaignMedia([FromBody] CampaignMediaInsert campaignMediaInsert)
+        public async Task<IActionResult> AddCampaignMedia([FromBody] MvCampaignMediaAdd campaignMediaAdd)
         {
             try
             {
-                var response = await cms.InsertCampaignMedia(campaignMediaInsert);
+                var response = await cms.AddCampaignMedia(campaignMediaAdd);
                 return Ok(ApiResponse.Success(response));
             }
             catch (Exception ex)
@@ -25,7 +25,7 @@ namespace DoohAdManager.API.Controllers.Application.DBO
 
 
         [HttpGet]
-        public async Task<IActionResult> GetCampaignMedia([FromQuery] MvParamReqOption<CampaignMediaFilter> param)
+        public async Task<IActionResult> GetCampaignMedia([FromQuery] MvParamReqOption<MvCampaignMediaFilter> param)
         {
             try
             {
@@ -40,7 +40,7 @@ namespace DoohAdManager.API.Controllers.Application.DBO
 
         [HttpPut]
 
-        public async Task<IActionResult> UpdateCampaignMedia([FromBody] CampaignMediaUpdate campaignMediaUpdate)
+        public async Task<IActionResult> UpdateCampaignMedia([FromBody] MvCampaignMediaUpdate campaignMediaUpdate)
         {
             try
             {
@@ -55,7 +55,7 @@ namespace DoohAdManager.API.Controllers.Application.DBO
 
         [HttpDelete]
 
-        public async Task<IActionResult> DeleteCampaignMedia([FromQuery] CampaignMediaDelete campaignMediaDelete)
+        public async Task<IActionResult> DeleteCampaignMedia([FromQuery] MvCampaignMediaDelete campaignMediaDelete)
         {
             try
             {

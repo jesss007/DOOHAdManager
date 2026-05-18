@@ -10,9 +10,9 @@ namespace DoohAdManager.Interface.Application.DBO
 {
     public interface ICampaignService
     {
-        Task<Campaign?> InsertCampaign(CampaignInsert campaignInsert);
-        Task<MvGridConfig<Campaign>?> GetCampaign(MvParamReqOption<CampaignFilter> param);
-        Task<Campaign?> DeleteCampaign (CampaignDelete campaignDelete);
+        Task<MvCampaign?> CreateCampaign(MvCampaignCreate campaignCreate);
+        Task<MvGridConfig<MvCampaign>?> GetCampaign(MvParamReqOption<MvCampaignFilter> param);
+        Task<MvCampaign?> DeleteCampaign(MvCampaignDelete campaignDelete);
     
     }
 }

@@ -1,7 +1,7 @@
 import { Component, Injector, OnDestroy, OnInit } from '@angular/core';
 import { AppComponent } from '../../../../../app.component';
 import { Subject, takeUntil } from 'rxjs';
-import { Campaign, CampaignFilter } from '../../Models/campaign';
+import { MvCampaign, MvCampaignFilter } from '../../Models/campaign';
 import { sharedImports } from '../../../../../Shared/Imports/shared-imports';
 import { CampaignStatus } from '../../../../../Shared/Models/enum.model';
 import { CampaignService } from '../../Services/campaign.service';
@@ -12,7 +12,7 @@ import {
 import { CampaignCreateComponent } from '../campaign-create/campaign-create.component';
 import { CampaignInfoComponent } from '../campaign-info/campaign-info.component';
 import { CampaignMediaCreateEditComponent } from '../campaign-media/campaign-media-create-edit/campaign-media-create-edit.component';
-import { CampaignMedia } from '../../Models/campaign-media';
+import { MvCampaignMedia } from '../../Models/campaign-media';
 
 @Component({
   selector: 'campaign',
@@ -30,14 +30,14 @@ export class CampaignComponent
   extends AppComponent
   implements OnInit, OnDestroy
 {
-  private destroy = new Subject<void>();
-  campaign: Campaign[] = [];
-  campaignMedia?: CampaignMedia[];
+  private destroy$ = new Subject<void>();
+  campaign: MvCampaign[] = [];
+  campaignMedia?: MvCampaignMedia[];
   currentPage = 1;
   pageSize = 5;
   totalRows = 0;
 
-  filter: CampaignFilter = {
+  filter: MvCampaignFilter = {
     tenantId: 1,
     campaignId: undefined,
     status: undefined,
@@ -75,9 +75,9 @@ export class CampaignComponent
   loadCampaign() {
     this.campaignService
       .getCampaign(this.offset, this.pageSize, this.filter)
-      .pipe(takeUntil(this.destroy))
+      .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (response: ApiResponse<MvGridConfig<Campaign>>) => {
+        next: (response: ApiResponse<MvGridConfig<MvCampaign>>) => {
           this.campaign = response.data.data ?? [];
           this.totalRows = response.data.totalRows;
         },
@@ -109,20 +109,20 @@ export class CampaignComponent
     this.loadCampaign();
   }
 
-  onSave(campaign: Campaign) {
+  onSave(campaign: MvCampaign) {
     this.loadCampaign();
   }
 
-  onDelete(campaign: Campaign) {
+  onDelete(campaign: MvCampaign) {
     this.confirmAction({
       message: 'Are you sure you want to delete this campaign?',
       header: 'Delete Confirmation',
       accept: () => {
         this.campaignService
           .deleteCampaign({ id: campaign.id, deletedBy: 1 })
-          .pipe(takeUntil(this.destroy))
+          .pipe(takeUntil(this.destroy$))
           .subscribe({
-            next: (response: ApiResponse<Campaign>) => {
+            next: (response: ApiResponse<MvCampaign>) => {
               this.campaign = this.campaign.filter(
                 (c) => c.id !== response.data.id,
               );
@@ -145,7 +145,7 @@ export class CampaignComponent
   }
 
   ngOnDestroy(): void {
-    this.destroy.next();
-    this.destroy.complete();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

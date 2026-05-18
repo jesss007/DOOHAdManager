@@ -15,7 +15,7 @@ namespace DoohAdManager.API.Controllers.Application.DBO
     {
         [HttpPost]
         [Consumes("multipart/form-data")]
-        public async Task<IActionResult> InsertMedia([FromForm] InsertMediaRequest request)
+        public async Task<IActionResult> UploadMedia([FromForm] MvFileUploadParam request)
         {
             try 
             {
@@ -30,7 +30,7 @@ namespace DoohAdManager.API.Controllers.Application.DBO
                 request.Resolution = uploadResult.Resolution;
                 request.Duration = uploadResult.Duration;
 
-                var response = await ms.InsertMedia(request);
+                var response = await ms.UploadMedia(request);
                 return Ok(ApiResponse.Success(response));
             }
             catch(Exception ex)
@@ -41,7 +41,7 @@ namespace DoohAdManager.API.Controllers.Application.DBO
 
         [HttpGet]
 
-        public async Task<IActionResult> GetMedia([FromQuery] MvParamReqOption<MediaFilter> param)
+        public async Task<IActionResult> GetMedia([FromQuery] MvParamReqOption<MvMediaFilter> param)
         {
             try
             {
@@ -55,7 +55,7 @@ namespace DoohAdManager.API.Controllers.Application.DBO
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteMedia([FromQuery] MediaDelete mediaDelete)
+        public async Task<IActionResult> DeleteMedia([FromQuery] MvMediaDelete mediaDelete)
         {
             try
             {

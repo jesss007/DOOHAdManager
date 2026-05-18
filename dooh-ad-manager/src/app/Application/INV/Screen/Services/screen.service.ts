@@ -6,12 +6,12 @@ import {
   MvGridConfig,
 } from '../../../../Shared/Models/response-model';
 import {
-  Screen,
-  ScreenDelete,
-  ScreenDropdown,
-  ScreenFilter,
-  ScreenInsert,
-  ScreenUpdate,
+  MvScreen,
+  MvScreenDelete,
+  MvScreenDropdown,
+  MvScreenFilter,
+  MvScreenAdd,
+  MvScreenUpdate,
 } from '../Models/screen';
 
 @Injectable({
@@ -25,9 +25,9 @@ export class ScreenService {
   getScreen(
     offset: number,
     pageSize: number,
-    filter?: ScreenFilter,
-  ): Observable<ApiResponse<MvGridConfig<Screen>>> {
-    return this.http.get<ApiResponse<MvGridConfig<Screen>>>(
+    filter?: MvScreenFilter,
+  ): Observable<ApiResponse<MvGridConfig<MvScreen>>> {
+    return this.http.get<ApiResponse<MvGridConfig<MvScreen>>>(
       `${this.baseUrl}?Offset=${offset}&PageSize=${pageSize}` +
         `&Filter.TenantId=1` +
         `&Filter.Id=${filter?.id ?? ''}` +
@@ -37,30 +37,30 @@ export class ScreenService {
     );
   }
 
-  getScreenDdl(campaignId? : number):Observable<ApiResponse<ScreenDropdown[]>> {
-    return this.http.get<ApiResponse<ScreenDropdown[]>>(`${this.baseUrl}/Ddl`+
+  getScreenDdl(campaignId? : number):Observable<ApiResponse<MvScreenDropdown[]>> {
+    return this.http.get<ApiResponse<MvScreenDropdown[]>>(`${this.baseUrl}/Ddl`+
       (campaignId ? `?CampaignId=${campaignId}` : '')
     );
   }
 
-  getScreenById(id: number): Observable<ApiResponse<MvGridConfig<Screen>>> {
-    return this.http.get<ApiResponse<MvGridConfig<Screen>>>(
+  getScreenById(id: number): Observable<ApiResponse<MvGridConfig<MvScreen>>> {
+    return this.http.get<ApiResponse<MvGridConfig<MvScreen>>>(
       `${this.baseUrl}?Offset=0&PageSize=1` +
       `&Filter.TenantId=1`+
       `&Filter.Id=${id}`
     );
   }
 
-  addScreen(data: ScreenInsert): Observable<ApiResponse<Screen>> {
-    return this.http.post<ApiResponse<Screen>>(this.baseUrl, data);
+  addScreen(data: MvScreenAdd): Observable<ApiResponse<MvScreen>> {
+    return this.http.post<ApiResponse<MvScreen>>(this.baseUrl, data);
   }
 
-  updateScreen(data: ScreenUpdate): Observable<ApiResponse<Screen>> {
-    return this.http.put<ApiResponse<Screen>>(this.baseUrl, data);
+  updateScreen(data: MvScreenUpdate): Observable<ApiResponse<MvScreen>> {
+    return this.http.put<ApiResponse<MvScreen>>(this.baseUrl, data);
   }
 
-  deleteScreen(data: ScreenDelete): Observable<ApiResponse<Screen>> {
-    return this.http.delete<ApiResponse<Screen>>(
+  deleteScreen(data: MvScreenDelete): Observable<ApiResponse<MvScreen>> {
+    return this.http.delete<ApiResponse<MvScreen>>(
       `${this.baseUrl}?Id=${data.id}&DeletedBy=${data.deletedBy}`,
     );
   }

@@ -3,24 +3,18 @@ using DoohAdManager.Interface.Application.DBO;
 using DoohAdManager.Model.Application.DBO;
 using DoohAdManager.Model.Shared;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DoohAdManager.Service.Application.DBO
 {
     public class CampaignService(IDataAccessService ds) : ICampaignService
     {
-        public async Task<Campaign?> DeleteCampaign(CampaignDelete campaignDelete)
+        public async Task<MvCampaign?> DeleteCampaign(MvCampaignDelete campaignDelete)
         {
             try
             {
                 string json = JsonConvert.SerializeObject(campaignDelete);
                 string result = await ds.ActionProcedure("dbo.SpCampaignDel", json);
-                return JsonConvert.DeserializeObject<Campaign?>(result);
+                return JsonConvert.DeserializeObject<MvCampaign?>(result);
             }
             catch (Exception)
             {
@@ -28,13 +22,13 @@ namespace DoohAdManager.Service.Application.DBO
             }
         }
 
-        public async Task<MvGridConfig<Campaign>?> GetCampaign(MvParamReqOption<CampaignFilter> param)
+        public async Task<MvGridConfig<MvCampaign>?> GetCampaign(MvParamReqOption<MvCampaignFilter> param)
         {
             try
             {
                 string json = JsonConvert.SerializeObject(param);
                 string result = await ds.RetrievalProcedure("dbo.SpCampaignSel", json);
-                return JsonConvert.DeserializeObject<MvGridConfig<Campaign>?>(result);
+                return JsonConvert.DeserializeObject<MvGridConfig<MvCampaign>?>(result);
             }
             catch (Exception)
             {
@@ -43,22 +37,19 @@ namespace DoohAdManager.Service.Application.DBO
         }
 
     
-        public async Task<Campaign?> InsertCampaign(CampaignInsert campaignInsert)
+        public async Task<MvCampaign?> CreateCampaign(MvCampaignCreate campaignCreate)
         {
             try
             {
-                string json = JsonConvert.SerializeObject(campaignInsert);
+                string json = JsonConvert.SerializeObject(campaignCreate);
                 string result = await ds.ActionProcedure("dbo.SpCampaignIns", json);
-                return JsonConvert.DeserializeObject<Campaign?>(result);
+                return JsonConvert.DeserializeObject<MvCampaign?>(result);
             }
             catch (Exception)
             {
                 throw;
             }
 
-        }
-
-
-       
+        }       
     }
 }

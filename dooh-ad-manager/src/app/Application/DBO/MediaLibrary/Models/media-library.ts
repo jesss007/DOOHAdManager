@@ -1,4 +1,4 @@
-export interface MediaLibrary {
+export interface MvMediaLibrary {
     id : number;
     tenantId : number;
     name : string;
@@ -14,7 +14,7 @@ export interface MediaLibrary {
     deletedBy : number;
 }
 
-export interface MediaInsert {
+export interface MvMediaAdd {
     tenantId : number;
     name : string;
     url? : string;
@@ -25,19 +25,19 @@ export interface MediaInsert {
     createdBy? : number;
 }
 
-export interface MediaFilter {
+export interface MvMediaFilter {
     tenantId : number;
     search? : string;
     isVideo? : boolean
     isDeleted? : boolean;
 }
 
-export interface MediaDelete {
+export interface MvMediaDelete {
     id : number;
     deletedBy? : number;
 }
 
-export interface MediaDropdown{
+export interface MvMediaDropdown{
     id: number;
     name: string;
     url: string;

@@ -2,8 +2,8 @@ import { Component, Injector, OnDestroy, OnInit } from '@angular/core';
 import { sharedImports } from '../../../../../Shared/Imports/shared-imports';
 import { AppComponent } from '../../../../../app.component';
 import {
-  ScreenOperatingHour,
-  ScreenOperatingHourInsert,
+  MvScreenOperatingHour,
+  MvScreenOperatingHourAdd,
 } from '../../Models/screen-operating-hour';
 import { Subject, takeUntil } from 'rxjs';
 import { ScreenOperatingHourService } from '../../Services/screen-operating-hour.service';
@@ -21,14 +21,14 @@ export class ScreenOperatingHourComponent
   extends AppComponent
   implements OnInit, OnDestroy
 {
-  operatingHour: ScreenOperatingHour[] = [];
-  private destroy = new Subject<void>();
+  operatingHour: MvScreenOperatingHour[] = [];
+  private destroy$ = new Subject<void>();
   isVisible = false;
   DayOfWeek = DayOfWeek;
   startTimeDate!: Date;
   endTimeDate!: Date;
 
-  newSlot: ScreenOperatingHourInsert = new ScreenOperatingHourInsert();
+  newSlot: MvScreenOperatingHourAdd = new MvScreenOperatingHourAdd();
 
   dayOptions = [
     { label: 'Everyday', value: DayOfWeek.Everyday },
@@ -59,7 +59,7 @@ export class ScreenOperatingHourComponent
 
   show(screenId: number) {
     this.isVisible = false;
-    this.newSlot = new ScreenOperatingHourInsert();
+    this.newSlot = new MvScreenOperatingHourAdd();
     this.newSlot.screenId = screenId;
     this.startTimeDate = this.createTime(8, 0, 0);
     this.endTimeDate = this.createTime(22, 0, 0);
@@ -71,9 +71,9 @@ export class ScreenOperatingHourComponent
   loadOperatingHours(screenId: number) {
     this.screenOperatingHourService
       .getOperatingHour(screenId)
-      .pipe(takeUntil(this.destroy))
+      .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (response: ApiResponse<ScreenOperatingHour[]>) => {
+        next: (response: ApiResponse<MvScreenOperatingHour[]>) => {
           this.operatingHour = response?.data ?? [];
           console.log('operating hours:', this.operatingHour);
         },
@@ -143,16 +143,16 @@ export class ScreenOperatingHourComponent
 
     this.screenOperatingHourService
       .insertOperatingHour(this.newSlot)
-      .pipe(takeUntil(this.destroy))
+      .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (response: ApiResponse<ScreenOperatingHour>) => {
+        next: (response: ApiResponse<MvScreenOperatingHour>) => {
           if (!response.success) {
             this.showMessage('Error', response.message, 'error');
             return;
           }
           this.operatingHour.push(response.data);
           const screenId = this.newSlot.screenId;
-          this.newSlot = new ScreenOperatingHourInsert();
+          this.newSlot = new MvScreenOperatingHourAdd();
           this.newSlot.screenId = screenId;
           this.showMessage('Success', 'Slot added successfully', 'success');
         },
@@ -160,10 +160,10 @@ export class ScreenOperatingHourComponent
       });
   }
 
-  deleteSlot(slot: ScreenOperatingHour) {
+  deleteSlot(slot: MvScreenOperatingHour) {
     this.screenOperatingHourService
       .deleteOperatingHour({ id: slot.id, deletedBy: 1 })
-      .pipe(takeUntil(this.destroy))
+      .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: () => {
           this.operatingHour = this.operatingHour.filter(
@@ -181,7 +181,7 @@ export class ScreenOperatingHourComponent
   }
 
   ngOnDestroy(): void {
-    this.destroy.next();
-    this.destroy.complete();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

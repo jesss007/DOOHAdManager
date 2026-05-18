@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DoohAdManager.Model.Application.DBO
 {
-    public class MediaLibrary
+    public class MvMediaLibrary
     {
         public int Id { get; set; }
         public int TenantId { get; set; }
@@ -24,7 +24,7 @@ namespace DoohAdManager.Model.Application.DBO
         public int DeletedBy { get; set; }
     }
 
-    public class MediaInsert
+    public class MvMediaUpload
     {
         public int TenantId { get; set; }
         public required string Name { get; set; }
@@ -37,7 +37,7 @@ namespace DoohAdManager.Model.Application.DBO
 
     }
 
-    public class MediaFilter
+    public class MvMediaFilter
     {
         public int TenantId { get; set; }
         public string? Search { get; set; }
@@ -45,13 +45,13 @@ namespace DoohAdManager.Model.Application.DBO
         public bool? IsDeleted { get; set; }
     }
 
-    public class MediaDelete 
+    public class MvMediaDelete 
     { 
         public int Id { get; set; }
         public int? DeletedBy { get; set; }
     }
 
-    public class MediaDropdown
+    public class MvMediaDropdown
     {
         public int Id { get; set; }
         public required string Name { get; set; }

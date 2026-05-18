@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { sharedImports } from '../../../../../Shared/Imports/shared-imports';
 import { AppComponent } from '../../../../../app.component';
-import { MediaLibrary } from '../../Models/media-library';
+import { MvMediaLibrary } from '../../Models/media-library';
 import { Subject, takeUntil } from 'rxjs';
 import { MediaLibraryService } from '../../Services/media-library.service';
 import { ApiResponse } from '../../../../../Shared/Models/response-model';
@@ -24,9 +24,9 @@ export class MediaLibraryUploadComponent
   extends AppComponent
   implements OnInit, OnDestroy
 {
-  @Output() onSave = new EventEmitter<MediaLibrary>();
+  @Output() onSave = new EventEmitter<MvMediaLibrary>();
 
-  private destroy = new Subject<void>();
+  private destroy$ = new Subject<void>();
   isActive: boolean = false;
   selectedFile: File | null = null;
   previewUrl: string | null = null;
@@ -87,9 +87,9 @@ export class MediaLibraryUploadComponent
 
     this.mediaLibraryService
       .uploadMedia(this.selectedFile, this.name.trim(), this.isVideo)
-      .pipe(takeUntil(this.destroy))
+      .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (response: ApiResponse<MediaLibrary>) => {
+        next: (response: ApiResponse<MvMediaLibrary>) => {
           if (!response.success) {
             this.showMessage('Error', response.message, 'error');
             this.isLoading = false;
@@ -120,7 +120,7 @@ export class MediaLibraryUploadComponent
   }
 
   ngOnDestroy(): void {
-    this.destroy.next();
-    this.destroy.complete();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

@@ -7,10 +7,10 @@ import {
   Output,
 } from '@angular/core';
 import { AppComponent } from '../../../../../app.component';
-import { Campaign, CampaignInsert } from '../../Models/campaign';
+import { MvCampaign, MvCampaignCreate } from '../../Models/campaign';
 import { Subject, takeUntil } from 'rxjs';
 import { CampaignService } from '../../Services/campaign.service';
-import { ScreenDropdown } from '../../../../INV/Screen/Models/screen';
+import { MvScreenDropdown } from '../../../../INV/Screen/Models/screen';
 import { ScreenService } from '../../../../INV/Screen/Services/screen.service';
 import { ApiResponse } from '../../../../../Shared/Models/response-model';
 import { sharedImports } from '../../../../../Shared/Imports/shared-imports';
@@ -27,15 +27,15 @@ export class CampaignCreateComponent
   extends AppComponent
   implements OnInit, OnDestroy
 {
-  @Output() onSubmit = new EventEmitter<Campaign>();
+  @Output() onSubmit = new EventEmitter<MvCampaign>();
 
-  private destroy = new Subject<void>();
+  private destroy$ = new Subject<void>();
   isActive = false;
   activeStep = 0;
-  campaign: CampaignInsert = new CampaignInsert();
+  campaign: MvCampaignCreate = new MvCampaignCreate();
 
-  screen: ScreenDropdown[] = [];
-  selectedScreen: ScreenDropdown[] = [];
+  screen: MvScreenDropdown[] = [];
+  selectedScreen: MvScreenDropdown[] = [];
   minDate: Date = (() => {
     const d = new Date();
     d.setDate(d.getDate() + 1); // tomorrow
@@ -60,16 +60,16 @@ export class CampaignCreateComponent
   reset() {
     this.activeStep = 0;
     this.loadScreen();
-    this.campaign = new CampaignInsert();
+    this.campaign = new MvCampaignCreate();
     this.selectedScreen = [];
   }
 
   loadScreen() {
     this.screenService
       .getScreenDdl()
-      .pipe(takeUntil(this.destroy))
+      .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (response: ApiResponse<ScreenDropdown[]>) => {
+        next: (response: ApiResponse<MvScreenDropdown[]>) => {
           this.screen = response.data ?? [];
         },
         error: (err) => {
@@ -78,11 +78,11 @@ export class CampaignCreateComponent
       });
   }
 
-  isSelected(screen: ScreenDropdown): boolean {
+  isSelected(screen: MvScreenDropdown): boolean {
     return this.selectedScreen.findIndex((s) => s.id === screen.id) !== -1;
   }
 
-  checkedScreen(screen: ScreenDropdown) {
+  checkedScreen(screen: MvScreenDropdown) {
     const index = this.selectedScreen.findIndex((s) => s.id === screen.id);
 
     if (index !== -1) {
@@ -186,9 +186,9 @@ export class CampaignCreateComponent
 
         this.campaignService
           .addCampaign(this.campaign)
-          .pipe(takeUntil(this.destroy))
+          .pipe(takeUntil(this.destroy$))
           .subscribe({
-            next: (response: ApiResponse<Campaign>) => {
+            next: (response: ApiResponse<MvCampaign>) => {
               this.isActive = false;
               this.onSubmit.emit(response.data);
               this.showMessage(
@@ -212,7 +212,7 @@ export class CampaignCreateComponent
   }
 
   ngOnDestroy(): void {
-    this.destroy.next();
-    this.destroy.complete();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../../../../Shared/Models/response-model';
-import { ScreenOperatingHour, ScreenOperatingHourDelete, ScreenOperatingHourInsert } from '../Models/screen-operating-hour';
+import { MvScreenOperatingHour, MvScreenOperatingHourDelete, MvScreenOperatingHourAdd } from '../Models/screen-operating-hour';
 
 @Injectable({
   providedIn: 'root'
@@ -14,18 +14,18 @@ export class ScreenOperatingHourService {
 
   constructor(private http: HttpClient) {}
 
-  getOperatingHour(screenId: number): Observable<ApiResponse<ScreenOperatingHour[]>> {
-    return this.http.get<ApiResponse<ScreenOperatingHour[]>>(
+  getOperatingHour(screenId: number): Observable<ApiResponse<MvScreenOperatingHour[]>> {
+    return this.http.get<ApiResponse<MvScreenOperatingHour[]>>(
       `${this.getUrl}?id=${screenId}`,
     );
   }
 
-  insertOperatingHour(data: ScreenOperatingHourInsert): Observable<ApiResponse<ScreenOperatingHour>>{
-    return this.http.post<ApiResponse<ScreenOperatingHour>>(this.baseUrl, data);
+  insertOperatingHour(data: MvScreenOperatingHourAdd): Observable<ApiResponse<MvScreenOperatingHour>>{
+    return this.http.post<ApiResponse<MvScreenOperatingHour>>(this.baseUrl, data);
   }
 
-  deleteOperatingHour(data: ScreenOperatingHourDelete): Observable<ApiResponse<ScreenOperatingHour>>{
-    return this.http.delete<ApiResponse<ScreenOperatingHour>>(
+  deleteOperatingHour(data: MvScreenOperatingHourDelete): Observable<ApiResponse<MvScreenOperatingHour>>{
+    return this.http.delete<ApiResponse<MvScreenOperatingHour>>(
       `${this.baseUrl}?Id=${data.id}&DeletedBy=${data.deletedBy}`,
     );
   }

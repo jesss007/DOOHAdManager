@@ -14,11 +14,11 @@ namespace DoohAdManager.API.Controllers.Application.DBO
     {
         [HttpPost]
 
-        public async Task<IActionResult> InsertCampaign([FromBody] CampaignInsert campaignInsert)
+        public async Task<IActionResult> CreateCampaign([FromBody] MvCampaignCreate campaignCreate)
         {
             try
-            {
-                var response = await cs.InsertCampaign(campaignInsert);
+            { 
+                var response = await cs.CreateCampaign(campaignCreate);
                 return Ok(ApiResponse.Success(response));
             }
             catch (Exception ex)
@@ -29,7 +29,7 @@ namespace DoohAdManager.API.Controllers.Application.DBO
 
         [HttpGet]
 
-        public async Task<IActionResult> GetCampaign([FromQuery] MvParamReqOption<CampaignFilter> param)
+        public async Task<IActionResult> GetCampaign([FromQuery] MvParamReqOption<MvCampaignFilter> param)
         {
             try
             {
@@ -44,7 +44,7 @@ namespace DoohAdManager.API.Controllers.Application.DBO
 
         [HttpDelete]
 
-        public async Task<IActionResult> DeleteCampaign([FromQuery] CampaignDelete campaignDelete)
+        public async Task<IActionResult> DeleteCampaign([FromQuery] MvCampaignDelete campaignDelete)
         {
             try
             {

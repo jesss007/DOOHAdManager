@@ -10,11 +10,11 @@ namespace DoohAdManager.Interface.Application.INV
 {
     public interface IScreenService
     {
-        Task<MvGridConfig<Screen>?> GetScreen(MvParamReqOption<ScreenFilter> param);
-        Task<Screen?> InsertScreen(ScreenInsert screenInsert);
-        Task<Screen?> UpdateScreen(ScreenUpdate screenUpdate);
-        Task<Screen?> DeleteScreen(ScreenDelete screenDelete);
-        Task<List<ScreenDropdown>?> GetScreenDdl(int? campaignId = null);
+        Task<MvGridConfig<MvScreen>?> GetScreen(MvParamReqOption<MvScreenFilter> param);
+        Task<MvScreen?> AddScreen(MvScreenAdd screenAdd);
+        Task<MvScreen?> UpdateScreen(MvScreenUpdate screenUpdate);
+        Task<MvScreen?> DeleteScreen(MvScreenDelete screenDelete);
+        Task<List<MvScreenDropdown>?> GetScreenDdl(int? campaignId = null);
 
     }
 

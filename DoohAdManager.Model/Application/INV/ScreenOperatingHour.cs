@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DoohAdManager.Model.Application.INV
 {
-    public class ScreenOperatingHour
+    public class MvScreenOperatingHour
     {
         public int Id { get; set; }
         public int ScreenId { get; set; }
@@ -23,7 +23,7 @@ namespace DoohAdManager.Model.Application.INV
         public int? DeletedBy { get; set; }
     }
 
-    public class ScreenOperatingHourInsert
+    public class MvScreenOperatingHourAdd
     {
         public int ScreenId { get; set; }
         public TimeSpan StartTime { get; set; }
@@ -33,7 +33,7 @@ namespace DoohAdManager.Model.Application.INV
         public int? CreatedBy { get; set; }
 
     }
-    public class ScreenOperatingHourDelete
+    public class MvScreenOperatingHourDelete
     {
         public int Id { get; set; }
         public int? DeletedBy { get; set; }

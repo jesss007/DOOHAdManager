@@ -1,8 +1,8 @@
-export interface CampaignMedia {
+export interface MvCampaignMedia {
   campaignId: number;
   screenId: number;
   screenName: string;
-  media: MediaItem[];
+  media: MvMediaItem[];
   playDate: string;
   createdAt: Date;
   updatedAt: Date;
@@ -12,7 +12,7 @@ export interface CampaignMedia {
   deletedBy: number;
 }
 
-export interface MediaItem {
+export interface MvMediaItem {
   id: number;
   mediaId: number;
   mediaName: string;
@@ -21,12 +21,12 @@ export interface MediaItem {
   playSequence: number;
 }
 
-export class CampaignMediaInsert {
+export class MvCampaignMediaAdd {
   campaignId: number;
   screenId: number;
   playDate: string;
   createdBy: number;
-  media: MediaItemInsert[];
+  media: MvMediaItemAdd[];
 
   constructor() {
     this.campaignId = 0;
@@ -37,17 +37,17 @@ export class CampaignMediaInsert {
   }
 }
 
-export interface MediaItemInsert {
+export interface MvMediaItemAdd {
   mediaId: number;
   playSequence: number;
 }
 
-export class CampaignMediaUpdate {
+export class MvCampaignMediaUpdate {
   campaignId: number;
   screenId: number;
   playDate: string;
   updatedBy: number;
-  media: MediaItemUpdate[];
+  media: MvMediaItemUpdate[];
 
   constructor() {
     this.campaignId = 0;
@@ -58,24 +58,24 @@ export class CampaignMediaUpdate {
   }
 }
 
-export interface MediaItemUpdate {
+export interface MvMediaItemUpdate {
   id: number;
   playSequence: number;
 }
 
-export interface CampaignMediaFilter {
+export interface MvCampaignMediaFilter {
   campaignId: number;
   screenId?: number;
   playDate?: string | null;
   search?: string;
 }
 
-export interface CampaignMediaDelete {
+export interface MvCampaignMediaDelete {
   id: number;
   deletedBy: number;
 }
 
-export interface CampaignMediaDeleted {
+export interface MvCampaignMediaDeleted {
   id: number;
   campaignId: number;
   screenId: number;

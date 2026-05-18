@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { MediaLibrary, MediaFilter, MediaDelete, MediaDropdown } from '../Models/media-library';
+import { MvMediaLibrary, MvMediaFilter, MvMediaDelete, MvMediaDropdown } from '../Models/media-library';
 import { Observable } from 'rxjs';
 import {
   ApiResponse,
@@ -18,9 +18,9 @@ export class MediaLibraryService {
   getMedia(
     offset: number,
     pageSize: number,
-    filter?: MediaFilter,
-  ): Observable<ApiResponse<MvGridConfig<MediaLibrary>>> {
-    return this.http.get<ApiResponse<MvGridConfig<MediaLibrary>>>(
+    filter?: MvMediaFilter,
+  ): Observable<ApiResponse<MvGridConfig<MvMediaLibrary>>> {
+    return this.http.get<ApiResponse<MvGridConfig<MvMediaLibrary>>>(
       `${this.baseUrl}?Offset=${offset}&PageSize=${pageSize}` +
         `&Filter.TenantId=${filter?.tenantId}` +
         `&Filter.Search=${filter?.search ?? ''}` +
@@ -37,7 +37,7 @@ export class MediaLibraryService {
     file: File,
     name: string,
     isVideo: boolean,
-  ): Observable<ApiResponse<MediaLibrary>> {
+  ): Observable<ApiResponse<MvMediaLibrary>> {
     const formData = new FormData();
     formData.append('File', file);
     formData.append('Name', name);
@@ -45,20 +45,20 @@ export class MediaLibraryService {
     formData.append('TenantId', '1');
     formData.append('CreatedBy', '1');
 
-    return this.http.post<ApiResponse<MediaLibrary>>(
+    return this.http.post<ApiResponse<MvMediaLibrary>>(
       `${this.baseUrl}`,
       formData,
     );
   }
 
-  deleteMedia(data: MediaDelete): Observable<ApiResponse<MediaLibrary>>{
-    return this.http.delete<ApiResponse<MediaLibrary>>(
+  deleteMedia(data: MvMediaDelete): Observable<ApiResponse<MvMediaLibrary>>{
+    return this.http.delete<ApiResponse<MvMediaLibrary>>(
       `${this.baseUrl}?Id=${data.id}&DeletedBy=${data.deletedBy}`,
     );
   }
 
-  getMediaDdl(): Observable<ApiResponse<MediaDropdown[]>>{
-    return this.http.get<ApiResponse<MediaDropdown[]>>(`${this.baseUrl}/Ddl`);
+  getMediaDdl(): Observable<ApiResponse<MvMediaDropdown[]>>{
+    return this.http.get<ApiResponse<MvMediaDropdown[]>>(`${this.baseUrl}/Ddl`);
   }
 
 }

@@ -9,9 +9,9 @@ namespace DoohAdManager.Interface.Application.INV
 {
     public interface IScreenOperatingHourService
     {
-        Task<ScreenOperatingHour?> InsertScreenOperatingHour(ScreenOperatingHourInsert operatingHourInsert);
-        Task<List<ScreenOperatingHour>?> GetScreenOperatingHour(int screenId);
-        Task<ScreenOperatingHour?> DeleteScreenOperatingHour(ScreenOperatingHourDelete operatingHourDelete);
+        Task<MvScreenOperatingHour?> AddScreenOperatingHour(MvScreenOperatingHourAdd operatingHourAdd);
+        Task<List<MvScreenOperatingHour>?> GetScreenOperatingHour(int screenId);
+        Task<MvScreenOperatingHour?> DeleteScreenOperatingHour(MvScreenOperatingHourDelete operatingHourDelete);
 
     }
 }

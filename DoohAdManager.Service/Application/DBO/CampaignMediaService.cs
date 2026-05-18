@@ -9,13 +9,13 @@ namespace DoohAdManager.Service.Application.DBO
     public class CampaignMediaService(IDataAccessService ds) : ICampaignMediaService
     {
 
-        public async Task<CampaignMedia?> InsertCampaignMedia(CampaignMediaInsert campaignMediaInsert)
+        public async Task<MvCampaignMedia?> AddCampaignMedia(MvCampaignMediaAdd campaignMediaAdd)
         {
             try
             {
-                string json = JsonConvert.SerializeObject(campaignMediaInsert);
+                string json = JsonConvert.SerializeObject(campaignMediaAdd);
                 string result = await ds.ActionProcedure("dbo.SpCampaignMediaIns", json);
-                return JsonConvert.DeserializeObject<CampaignMedia?>(result);
+                return JsonConvert.DeserializeObject<MvCampaignMedia?>(result);
             }
             catch (Exception)
             {
@@ -23,13 +23,13 @@ namespace DoohAdManager.Service.Application.DBO
             }
         }
 
-        public async Task<MvGridConfig<CampaignMedia>?> GetCampaignMedia(MvParamReqOption<CampaignMediaFilter> param)
+        public async Task<MvGridConfig<MvCampaignMedia>?> GetCampaignMedia(MvParamReqOption<MvCampaignMediaFilter> param)
         {
             try
             {
                 string json = JsonConvert.SerializeObject(param);
                 string result = await ds.RetrievalProcedure("dbo.SpCampaignMediaSel", json);
-                return JsonConvert.DeserializeObject<MvGridConfig<CampaignMedia>?>(result);
+                return JsonConvert.DeserializeObject<MvGridConfig<MvCampaignMedia>?>(result);
             }
             catch (Exception)
             {
@@ -38,26 +38,26 @@ namespace DoohAdManager.Service.Application.DBO
         }
 
 
-        public async Task<CampaignMedia?> UpdateCampaignMedia(CampaignMediaUpdate campaignMediaUpdate)
+        public async Task<MvCampaignMedia?> UpdateCampaignMedia(MvCampaignMediaUpdate campaignMediaUpdate)
         {
             try
             {
                 string json = JsonConvert.SerializeObject(campaignMediaUpdate);
                 string result = await ds.ActionProcedure("dbo.SpCampaignMediaUpd", json);
-                return JsonConvert.DeserializeObject<CampaignMedia?>(result);
+                return JsonConvert.DeserializeObject<MvCampaignMedia?>(result);
             }
             catch (Exception)
             {
                 throw;
             }
         }
-        public async Task<CampaignMediaDeleted?> DeleteCampaignMedia(CampaignMediaDelete campaignMediaDelete)
+        public async Task<MvCampaignMediaDeleted?> DeleteCampaignMedia(MvCampaignMediaDelete campaignMediaDelete)
         {
             try
             {
                 string json = JsonConvert.SerializeObject(campaignMediaDelete);
                 string result = await ds.ActionProcedure("dbo.SpCampaignMediaDel", json);
-                return JsonConvert.DeserializeObject<CampaignMediaDeleted?>(result);
+                return JsonConvert.DeserializeObject<MvCampaignMediaDeleted?>(result);
             }
             catch (Exception)
             {

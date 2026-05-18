@@ -6,7 +6,7 @@ import {
   ScreenStatus,
   ScreenOrientation,
 } from '../../../../../Shared/Models/enum.model';
-import { Screen } from '../../Models/screen';
+import { MvScreen } from '../../Models/screen';
 import { ScreenService } from '../../Services/screen.service';
 import {
   ApiResponse,
@@ -22,7 +22,7 @@ import {
 })
 export class ScreenInfoComponent extends AppComponent {
   isVisible = false;
-  selectedScreen: Screen | null = null;
+  selectedScreen: MvScreen | null = null;
 
   ScreenStatus = ScreenStatus;
   ScreenOrientation = ScreenOrientation;
@@ -40,7 +40,7 @@ export class ScreenInfoComponent extends AppComponent {
     this.selectedScreen = null;
 
     this.screenService.getScreenById(id).subscribe({
-      next: (response: ApiResponse<MvGridConfig<Screen>>) => {
+      next: (response: ApiResponse<MvGridConfig<MvScreen>>) => {
         this.selectedScreen = response.data.data?.[0] ?? null;
       },
       error: (err) => {

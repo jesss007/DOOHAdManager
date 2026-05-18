@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
-  CampaignFilter,
-  Campaign,
-  CampaignDelete,
-  CampaignInsert,
+  MvCampaignFilter,
+  MvCampaign,
+  MvCampaignDelete,
+  MvCampaignCreate,
 } from '../Models/campaign';
 import { Observable } from 'rxjs';
 import {
@@ -22,9 +22,9 @@ export class CampaignService {
   getCampaign(
     offset: number,
     pageSize: number,
-    filter?: CampaignFilter,
-  ): Observable<ApiResponse<MvGridConfig<Campaign>>> {
-    return this.http.get<ApiResponse<MvGridConfig<Campaign>>>(
+    filter?: MvCampaignFilter,
+  ): Observable<ApiResponse<MvGridConfig<MvCampaign>>> {
+    return this.http.get<ApiResponse<MvGridConfig<MvCampaign>>>(
       `${this.baseUrl}?Offset=${offset}&PageSize=${pageSize}` +
         `&Filter.TenantId=${filter?.tenantId ?? 1}` +
         `&Filter.CampaignId=${filter?.campaignId ?? ''}` +
@@ -33,18 +33,18 @@ export class CampaignService {
     );
   }
 
-  deleteCampaign(data: CampaignDelete): Observable<ApiResponse<Campaign>> {
-    return this.http.delete<ApiResponse<Campaign>>(
+  deleteCampaign(data: MvCampaignDelete): Observable<ApiResponse<MvCampaign>> {
+    return this.http.delete<ApiResponse<MvCampaign>>(
       `${this.baseUrl}?Id=${data.id}&DeletedBy=${data.deletedBy}`,
     );
   }
 
-  addCampaign(data: CampaignInsert): Observable<ApiResponse<Campaign>> {
-    return this.http.post<ApiResponse<Campaign>>(this.baseUrl, data);
+  addCampaign(data: MvCampaignCreate): Observable<ApiResponse<MvCampaign>> {
+    return this.http.post<ApiResponse<MvCampaign>>(this.baseUrl, data);
   }
 
-  getCampaignById(id: number): Observable<ApiResponse<MvGridConfig<Campaign>>> {
-    return this.http.get<ApiResponse<MvGridConfig<Campaign>>>(
+  getCampaignById(id: number): Observable<ApiResponse<MvGridConfig<MvCampaign>>> {
+    return this.http.get<ApiResponse<MvGridConfig<MvCampaign>>>(
       `${this.baseUrl}?Offset=0&PageSize=1` +
         `&Filter.TenantId=1` +
         `&Filter.CampaignId=${id}`,

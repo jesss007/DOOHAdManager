@@ -3,7 +3,7 @@ using DoohAdManager.Model.Shared;
 
 namespace DoohAdManager.Model.Application.DBO
 {
-    public class Campaign
+    public class MvCampaign
     {
         public int Id { get; set; }
         public int TenantId { get; set; }
@@ -16,12 +16,12 @@ namespace DoohAdManager.Model.Application.DBO
         public bool IsDeleted { get; set; }
         public DateTime? DeletedAt { get; set; }
         public int? DeletedBy { get; set; }
-        public List<CampaignDate>? Date { get; set; }
-        public List<CampaignScreen>? Screen { get; set; }
-        public List<CampaignMedia>? CampaignMedia { get; set; }
+        public List<MvCampaignDate>? Date { get; set; }
+        public List<MvCampaignScreen>? Screen { get; set; }
+        public List<MvCampaignMedia>? CampaignMedia { get; set; }
     }
 
-    public class CampaignDate
+    public class MvCampaignDate
     {
         public int Id { get; set; }
         public int CampaignId { get; set; }
@@ -29,7 +29,7 @@ namespace DoohAdManager.Model.Application.DBO
         public DateTime EndDate { get; set; }
     }
 
-    public class CampaignScreen
+    public class MvCampaignScreen
     {
         public int Id { get; set; }
         public int CampaignId { get; set; }
@@ -38,40 +38,40 @@ namespace DoohAdManager.Model.Application.DBO
         public required string ScreenName { get; set; }
     }
 
-    public class CampaignInsert
+    public class MvCampaignCreate
     {
         public int TenantId { get; set; }
         public required string Name { get; set; }
         public string? Remarks { get; set; }
         public int CreatedBy { get; set; }
-        public required List<CampaignDateInsert> Date { get; set; }
-        public required List<CampaignScreenInsert> Screen { get; set; }
+        public required List<MvCampaignDateCreate> Date { get; set; }
+        public required List<MvCampaignScreenAdd> Screen { get; set; }
     }
 
-    public class CampaignDateInsert
+    public class MvCampaignDateCreate
     {
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
     }
 
-    public class CampaignScreenInsert
+    public class MvCampaignScreenAdd
     {
         public int ScreenId { get; set; }
     }
 
-    public class CampaignUpdate
+    public class MvCampaignUpdate
     {
         public int Id { get; set; }
         public CampaignStatus Status { get; set; }
     }
 
-    public class CampaignDelete
+    public class MvCampaignDelete
     {
         public int Id { get; set; }
         public int DeletedBy { get; set; }
     }
 
-    public class CampaignFilter
+    public class MvCampaignFilter
     {
         public int TenantId { get; set; }
         public int? CampaignId { get; set; }

@@ -2,7 +2,7 @@ import { Component, Injector, OnDestroy, OnInit } from '@angular/core';
 import { sharedImports } from '../../../../../Shared/Imports/shared-imports';
 import { AppComponent } from '../../../../../app.component';
 import { Subject, takeUntil } from 'rxjs';
-import { Screen, ScreenFilter } from '../../Models/screen';
+import { MvScreen, MvScreenFilter } from '../../Models/screen';
 import {
   ScreenStatus,
   ScreenOrientation,
@@ -29,13 +29,13 @@ import { ScreenInfoComponent } from '../screen-info/screen-info.component';
   styleUrl: './screen.component.scss',
 })
 export class ScreenComponent extends AppComponent implements OnInit, OnDestroy {
-  private destroy = new Subject<void>();
-  screens: Screen[] = [];
+  private destroy$ = new Subject<void>();
+  screens: MvScreen[] = [];
   currentPage = 1;
   pageSize = 5;
   totalRows = 0;
 
-  filter: ScreenFilter = {
+  filter: MvScreenFilter = {
     tenantId: 1,
     search: undefined,
     status: undefined,
@@ -78,9 +78,9 @@ export class ScreenComponent extends AppComponent implements OnInit, OnDestroy {
   loadScreens() {
     this.screenService
       .getScreen(this.offset, this.pageSize, this.filter)
-      .pipe(takeUntil(this.destroy))
+      .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (response: ApiResponse<MvGridConfig<Screen>>) => {
+        next: (response: ApiResponse<MvGridConfig<MvScreen>>) => {
           this.screens = response.data.data ?? [];
           this.totalRows = response.data.totalRows;
         },
@@ -112,7 +112,7 @@ export class ScreenComponent extends AppComponent implements OnInit, OnDestroy {
     this.loadScreens();
   }
 
-  onSave(submitScreen: Screen) {
+  onSave(submitScreen: MvScreen) {
     const index = this.screens.findIndex((p) => p.id === submitScreen.id);
 
     if (index !== -1) {
@@ -124,16 +124,16 @@ export class ScreenComponent extends AppComponent implements OnInit, OnDestroy {
     }
   }
 
-  onDelete(screen: Screen) {
+  onDelete(screen: MvScreen) {
     this.confirmAction({
       message: 'Are you sure you want to delete this screen',
       header: 'Delete Confirmation',
       accept: () => {
         this.screenService
           .deleteScreen({ id: screen.id, deletedBy: 1 })
-          .pipe(takeUntil(this.destroy))
+          .pipe(takeUntil(this.destroy$))
           .subscribe({
-            next: (response: ApiResponse<Screen>) => {
+            next: (response: ApiResponse<MvScreen>) => {
               this.screens = this.screens.filter(
                 (u) => u.id !== response.data.id,
               );
@@ -156,7 +156,7 @@ export class ScreenComponent extends AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.destroy.next();
-    this.destroy.complete();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

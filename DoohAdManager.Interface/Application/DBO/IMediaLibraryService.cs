@@ -5,11 +5,11 @@ namespace DoohAdManager.Interface.Application.DBO
 {
     public interface IMediaLibraryService
     {
-        Task<MediaLibrary?> InsertMedia(MediaInsert mediaLibraryInsert);
-        Task<MvGridConfig<MediaLibrary>?> GetMedia(MvParamReqOption<MediaFilter> param);
-        Task<MediaLibrary?> DeleteMedia(MediaDelete mediaLibraryDelete);
+        Task<MvMediaLibrary?> UploadMedia(MvMediaUpload mediaLibraryUpload);
+        Task<MvGridConfig<MvMediaLibrary>?> GetMedia(MvParamReqOption<MvMediaFilter> param);
+        Task<MvMediaLibrary?> DeleteMedia(MvMediaDelete mediaLibraryDelete);
 
-        Task<List<MediaDropdown>?> GetMediaDropdown();
+        Task<List<MvMediaDropdown>?> GetMediaDropdown();
        
     }
 }
